@@ -1,0 +1,8 @@
+{
+  "name": "bigint-buffer",
+  "version": "2.0.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "index.cjs",
+  "description": "Bounded pure-JavaScript bigint-buffer compatibility; no native addon"
+}

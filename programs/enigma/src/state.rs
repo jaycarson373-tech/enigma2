@@ -1,0 +1,72 @@
+use borsh::{BorshDeserialize, BorshSerialize};
+#[derive(BorshSerialize, BorshDeserialize)]
+pub struct Config {
+    pub operator: [u8; 32],
+    pub filing_paused: bool,
+    pub next_id: u64,
+    pub bump: u8,
+    pub min_duration: i64,
+    pub max_duration: i64,
+    pub min_cap_bps: u16,
+    pub max_cap_bps: u16,
+    pub treasury: [u8; 32],
+    pub version: u8,
+}
+#[derive(BorshSerialize, BorshDeserialize)]
+pub struct Offering {
+    pub id: u64,
+    pub creator: [u8; 32],
+    pub quote_mint: [u8; 32],
+    pub quote_token_program: [u8; 32],
+    pub quote_decimals: u8,
+    pub is_native: bool,
+    pub status: u8,
+    pub creator_fee_bps: u16,
+    pub holder_reward: bool,
+    pub fee_bps: u16,
+    pub cap_bps: u16,
+    pub closes_at: i64,
+    pub target: u64,
+    pub raised: u64,
+    pub total_weight: u128,
+    pub v_token: u64,
+    pub v_pair: u64,
+    pub curve_supply: u64,
+    pub token_supply: u64,
+    pub wallet_cap: u64,
+    pub deposit: u64,
+    pub backers: u32,
+    pub mint: [u8; 32],
+    pub received: u64,
+    pub leftover: u64,
+    pub pad_fee: u64,
+    pub graduated: bool,
+    pub created_at: i64,
+    pub launched_at: i64,
+    pub bump: u8,
+    pub vault_bump: u8,
+    pub name: String,
+    pub symbol: String,
+    pub uri: String,
+    pub version: u8,
+    pub creation_cost: u64,
+}
+#[derive(BorshSerialize, BorshDeserialize)]
+pub struct Position {
+    pub offering: [u8; 32],
+    pub backer: [u8; 32],
+    pub committed: u64,
+    pub weight: u128,
+    pub joined_at: i64,
+    pub version: u8,
+}
+#[derive(BorshDeserialize)]
+pub struct Terms {
+    pub name: String,
+    pub symbol: String,
+    pub uri: String,
+    pub duration: i64,
+    pub cap_bps: u16,
+    pub creator_fee_bps: u16,
+    pub holder_reward: bool,
+}

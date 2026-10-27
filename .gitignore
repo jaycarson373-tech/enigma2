@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.env*
+!.env.example
+.vercel/
+*.tsbuildinfo
+artifacts/
+*.sqlite*
+*-keypair.json
+.DS_Store
+
+/target/

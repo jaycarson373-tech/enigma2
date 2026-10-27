@@ -1,0 +1,65 @@
+{
+  "name": "enigma2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "next dev --port 3143",
+    "build": "next build --webpack",
+    "start": "next start --port 3143",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "test:fork": "node --test --test-concurrency=1 tests/fork/*.test.mjs",
+    "test:independent": "node --test tests/fork/independent.test.mjs",
+    "release:plan": "node scripts/release-plan.mjs",
+    "test:release": "node --test tests/fork/release.test.mjs",
+    "release:preflight": "node scripts/release-preflight.mjs",
+    "preflight:stonk": "node scripts/stonk-preflight.mjs"
+  },
+  "dependencies": {
+    "@pump-fun/pump-sdk": "4.2.0",
+    "@raydium-io/raydium-sdk-v2": "0.2.72-alpha",
+    "@solana-program/address-lookup-table": "0.16.0",
+    "@solana-program/loader-v3": "0.8.0",
+    "@solana-program/system": "0.14.1",
+    "@solana/kit": "8.5.0",
+    "@solana/kit-plugin-wallet": "0.22.0",
+    "@solana/react": "8.5.0",
+    "@solana/spl-token": "0.4.14",
+    "@solana/web3.js": "1.99.0",
+    "@vercel/blob": "2.8.2",
+    "bigint-buffer": "*",
+    "bn.js": "5.2.5",
+    "bufferutil": "4.1.0",
+    "litesvm": "1.6.1",
+    "next": "16.4.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "sharp": "0.35.5",
+    "typescript": "5.9.3"
+  },
+  "overrides": {
+    "rpc-websockets": {
+      "uuid": "11.1.1"
+    },
+    "jayson": "5.0.0",
+    "toml": "5.0.1",
+    "@solana/buffer-layout-utils": {
+      "bigint-buffer": "file:./vendor/bigint-buffer"
+    },
+    "@vercel/cli-config": {
+      "zod": "4.6.6"
+    }
+  },
+  "workspaces": [
+    "vendor/bigint-buffer"
+  ]
+}

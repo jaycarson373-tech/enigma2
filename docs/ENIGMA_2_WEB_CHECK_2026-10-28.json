@@ -1,0 +1,50 @@
+{
+  "preview": "https://instant-zircon-erohi6z.tmp.now",
+  "checks": [
+    {
+      "path": "/api/readiness",
+      "status": 200
+    },
+    {
+      "path": "/api/feed",
+      "status": 200
+    },
+    {
+      "path": "/",
+      "status": 200
+    },
+    {
+      "path": "/docs",
+      "status": 200
+    },
+    {
+      "path": "/operations",
+      "status": 200
+    },
+    {
+      "path": "/api/local-release",
+      "status": 404
+    },
+    {
+      "path": "/lab/deploy",
+      "status": 404
+    },
+    {
+      "path": "/lab/visual",
+      "status": 404
+    },
+    {
+      "path": "/api/prepare",
+      "status": 400
+    },
+    {
+      "path": "/api/quote",
+      "status": 400
+    },
+    {
+      "path": "/api/rpc",
+      "status": 400
+    }
+  ],
+  "publicTransactions": 0
+}

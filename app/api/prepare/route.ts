@@ -1,4 +1,4 @@
-import { prepare } from "@/lib/prepare.mjs";
+import { prepare } from "@/lib/stonk-prepare.mjs";
 import { body, sameOrigin, publicError } from "@/lib/http.mjs";
 export const runtime = "nodejs";
 export const maxDuration = 30;

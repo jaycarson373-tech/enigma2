@@ -14,7 +14,7 @@ Read PROJECT.md and docs/RELEASE.md. Apply Matthew's Project Optimizer standard.
 Keep allocations, deposits and fees in integer base units. Preserve exact-wire,
 wallet-scoped recovery and known-outcome reconciliation. Mainnet reads and
 wallet transaction preparation are intended; the assistant must not spend funds
-or send public transactions without specific authorization and a cap. Enigma v1 is an independent Rust program. Its public deployment is not activated.
+or send public transactions without specific authorization and a cap. Enigma 2 is an independent STONK Rust program. Its public deployment is not activated.
 Keep the built-not-deployed manifest and write pause until reviewed activation.
 Reject unexpected program upgrades. Never present historical Sequence activity
 as Enigma-originated activity or fixtures as real users. Preserve legacy tests

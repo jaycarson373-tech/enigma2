@@ -7,20 +7,23 @@ import {
   isFullySignedTransaction,
 } from "@solana/kit";
 import WalletButton, { useEnigmaWallet } from "./wallet";
-import { deployment } from "@/lib/enigma-deployment.mjs";
-import { bytes64, createProtocol } from "@/lib/protocol.mjs";
+import { requireSimulation, requireNetworkFee } from "@/lib/simulation.mjs";
+import { enigma2Release as deployment } from "@/lib/enigma2-release.mjs";
+import {
+  bytes64,
+  createStonkProtocol as createProtocol,
+} from "@/lib/stonk-protocol.mjs";
 import {
   runInitialRelease,
   releaseStage,
   inspectBuffer,
   inspectProgram,
   inspectLookup,
-} from "@/lib/release-flow.mjs";
-import { lookupAddresses } from "@/lib/lookup-addresses.mjs";
+} from "@/lib/release-v2-flow.mjs";
+
 import { compileReleaseTransaction } from "@/lib/release-wire.mjs";
 const display = (v: string) => Number(BigInt(v)) / 1e9;
-const CAP = 1160000000n,
-  GAS_CAP = 20000000n;
+const GAS_CAP = 20000000n;
 export default function ReleaseConsole() {
   const { connected } = useEnigmaWallet(),
     wallet = connected?.account.address;
@@ -47,8 +50,7 @@ export default function ReleaseConsole() {
         }),
         b = await r.json();
       if (!r.ok) throw Error(b.error);
-      if (BigInt(b.cost.conservativeBalance) > CAP)
-        throw Error("The current deployment quote exceeds the review cap.");
+
       setPlan(b);
       setMessage("Inputs verified. No transaction has been requested.");
     } catch (e: any) {
@@ -61,7 +63,7 @@ export default function ReleaseConsole() {
     if (!plan || !wallet || !connected?.signer || !approved || busy) return;
     const who = wallet,
       signer: any = connected.signer,
-      key = "enigma:deployment:" + deployment.codeHash + ":" + who;
+      key = "enigma2:deployment:" + deployment.codeHash + ":" + who;
     let journal: any;
     try {
       journal = JSON.parse(localStorage.getItem(key) || "{}");
@@ -124,23 +126,6 @@ export default function ReleaseConsole() {
             (await c.decodeConfig(await readAccount(id.config))).operator ===
             who
           );
-        if (s.kind.startsWith("lookup-")) {
-          const expected = await lookupAddresses(
-            id.program,
-            id.config,
-            plan.pumpGlobal,
-          );
-          const table = inspectLookup(
-            await readAccount(journal.lookupTable),
-            who,
-            expected,
-            false,
-          );
-          return (
-            s.kind === "lookup-create" ||
-            table.addresses.length >= Math.min(expected.length, s.offset + 20)
-          );
-        }
       } catch {}
       return false;
     }
@@ -211,6 +196,7 @@ export default function ReleaseConsole() {
           { commitment: "confirmed" },
         ])
       ).value;
+      requireNetworkFee(fee);
       if (
         fee === null ||
         BigInt(journal.networkReserved || "0") + BigInt(fee) > GAS_CAP
@@ -220,10 +206,7 @@ export default function ReleaseConsole() {
         );
       const wire = getBase64EncodedWireTransaction(unsigned),
         sim = await call("simulateTransaction", [wire], stage);
-      if (sim.value.err)
-        throw Error(
-          "Deployment simulation failed. No wallet signature was requested.",
-        );
+      requireSimulation(sim);
       setMessage(label + " — approve in your wallet");
       let signed: any;
       if ("modifyAndSignTransactions" in signer)
@@ -290,7 +273,6 @@ export default function ReleaseConsole() {
             wallet: who,
             code,
             rent: plan.rent,
-            pumpGlobal: plan.pumpGlobal,
             readAccount,
             getSlot: () => call("getSlot", [{ commitment: "finalized" }]),
             execute,
@@ -298,7 +280,7 @@ export default function ReleaseConsole() {
             save,
           });
           setMessage(
-            "Deployment, code hash, authority, initialization and address table verified. Public launches remain paused for the separately capped acceptance test.",
+            "Enigma 2 deployment, code hash, authority and initialization verified. Public launches remain paused for the separately capped acceptance test.",
           );
           setPlan({ ...plan, result });
           break;
@@ -393,10 +375,11 @@ export default function ReleaseConsole() {
                 onChange={(e) => setApproved(e.target.checked)}
                 disabled={busy}
               />
-              I approve preparing this initial deployment with a maximum 1.16
-              SOL funding envelope and no more than 0.02 SOL in network fees. My
-              wallet remains the upgrade authority. This does not authorize
-              token launches or trades.
+              I approve preparing this initial deployment with the displayed
+              maximum funding envelope of{" "}
+              {display(plan.cost.conservativeBalance)} SOL and no more than 0.02
+              SOL in network fees. My wallet remains the upgrade authority. This
+              does not authorize token launches or trades.
             </label>
             <button
               className="button primary"

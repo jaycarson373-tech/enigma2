@@ -1,5 +1,5 @@
 [workspace]
-members = ["programs/enigma"]
+members = ["programs/enigma", "programs/enigma2"]
 resolver = "2"
 [profile.release]
 opt-level = "s"

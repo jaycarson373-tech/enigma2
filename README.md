@@ -1,91 +1,85 @@
 # Enigma 2
 
-Standalone repository:
-[jaycarson373-tech/enigma2](https://github.com/jaycarson373-tech/enigma2).
-Development uses `main` with fresh Git history. Enigma 1 stays in its original
-repository. This source snapshot carries the existing preparation work forward;
-fresh repository history does not establish a completed Stonk implementation.
+Independent STONK pools for timed openings on **Stonk.fun**. This is the separate
+[jaycarson373-tech/enigma2](https://github.com/jaycarson373-tech/enigma2) repository.
 
-**Enigma 1 checkpoint:** branch [`enigma-1`](https://github.com/jaycarson373-tech/enigma-launch/tree/enigma-1),
-commit `5a43124fda9e91a79d8b1ffbbfdab7204885e018`.
+**Implemented and tested in an isolated Solana VM. Mainnet deployment and funded
+public acceptance are pending. Public deposits remain disabled.**
 
-**Enigma 2 direction:** Stonk.fun-only execution through its official Raydium
-LaunchLab platform. This repository records that scope; the Stonk implementation is
-pending. See [Enigma 2](docs/ENIGMA_2.md). The remaining README describes the
-inherited Enigma 1 implementation and its verification, not v2 readiness.
+- Deposit STONK during a locked whole-minute window of 1–60 minutes.
+- Enforce a cumulative wallet cap of 0.1–10% of the token supply.
+- Atomically create a standard Stonk Token-2022 mint and buy with pooled STONK.
+- Claim actual purchased tokens and unused STONK to recorded beneficiaries.
+- Use Stonk-native buy/sell builders, explicit wallet review and exact signed-wire recovery.
+- SOL funds rent and network fees. The creator's separate 0.02 SOL launch budget
+  reimburses observed setup costs; unused budget returns to the creator.
 
-The owner selected **STONK pooling**. Run `npm run preflight:stonk` for a
-read-only venue-account check; success does not establish mainnet readiness.
-V1 deployment/preflight commands are blocked in this repository. The v2 program and
-client migration remain outstanding; see [mainnet status](docs/ENIGMA_2_MAINNET.md).
+The source is [programs/enigma2](programs/enigma2). The exact compiled release is
+[releases/v2/enigma2.so](releases/v2/enigma2.so), with identity/hash/status in
+[lib/enigma2-release.mjs](lib/enigma2-release.mjs). It has no Pump execution or fallback.
+The retained Enigma 1 source, fixtures and tests are historical references only.
+The original [Enigma 1 checkpoint](https://github.com/jaycarson373-tech/enigma-launch/tree/enigma-1)
+remains preserved in its original repository.
 
-Independent timed-pool launch program and original branded Solana interface.
-Create a 1–60 minute deposit window, enforce wallet caps, execute one atomic
-Pump.fun mint + pooled first buy, then claim purchased tokens proportionally.
+## Run and verify
 
-## Current release
-
-**Built and locally tested; public deployment inactive.** This release replaces
-Sequence's closed program with new Rust source. It does not use that executable,
-backend, address table or upgrade authority. No mainnet launch is claimed.
-
-- Independent Pinocchio program: [source](programs/enigma/src/lib.rs).
-- Public candidate identity/hash: [manifest](lib/enigma-deployment.mjs).
-- Compiled artifact: [Enigma v1](releases/v1/enigma.so).
-- Full isolated execution: `npm run test:independent` after SBF build.
-- Read-only deployment estimate: `npm run release:plan`.
-- Current upstream code checks and rent quote: `npm run release:preflight`.
-- Actual isolated loader/deployment/recovery check: `npm run test:release`.
-
-## Interface
-
-Dense original launchboard, wallet-standard connection/disconnect, Launch Lens,
-search/watchlist, image/metadata upload, lowercase tickers, capped first deposits,
-exact wallet review, SOL curve trades and signature-first recovery. Unknown
-outcomes never silently request another payment. Historical Sequence accounts and
-synthetic VM transactions are never shown as Enigma activity.
-
-## Development
-
-Node 24 and Solana CLI 3.1.10 / SBF platform tools 1.52.
+Node 24. No wallet secret is required for development or tests.
 
 ```sh
 npm ci
-cp .env.example .env.local
-NO_DNA=1 cargo-build-sbf --manifest-path programs/enigma/Cargo.toml --locked --jobs 1
-npm run test:independent
 npm test
+npm run test:fork
 npm run typecheck
 npm run build
 npm run dev
 ```
 
-Native Rust math tests:
-`NO_DNA=1 cargo test --manifest-path programs/enigma/Cargo.toml --features no-entrypoint --lib --locked`.
-`test:fork` also includes a separate archival Sequence reference test requiring
-mainnet reads. It is not the new independent program's acceptance test.
+`test:fork` runs the actual pinned Stonk program and exact v2 artifact in LiteSVM,
+including both claims, adverse account/rule tests, app buy/sell instructions,
+atomic rollback and an actual loader deployment/restart. All balances and keys
+in these tests are synthetic. No transaction is broadcast.
 
-The frontend runs on port 3143. `ENIGMA_WRITES_ENABLED=false` is preserved.
-Development filesystem caching is disabled to avoid filling this shared
-workstation's disk; production compilation and runtime are unchanged.
-A public deployment must pass manifest/code/config/address-table review before
-activation. The app needs no user wallet private key. Production RPC and Blob
-credentials remain server-only; the shared development RPC is not deployed.
+To rebuild the artifact, install Rust 1.89.0, Agave/Solana 3.1.10 and SBF platform
+tools 1.52, then run:
 
-Local development includes `/lab/deploy`, a wallet-controlled initial release
-console, and `/lab/visual`, an explicitly labeled synthetic discovery fixture.
-Both pages and the local release RPC endpoint are 404 in production. The funding
-wallet remains upgrade authority; program and buffer addresses derive from that
-wallet and the reviewed code hash, with no second signer secret. The console
-does not activate the public site or authorize a token launch/trade test.
+```sh
+NO_DNA=1 cargo-build-sbf --manifest-path programs/enigma2/Cargo.toml -- --locked --jobs 2
+cargo test --manifest-path programs/enigma2/Cargo.toml --features no-entrypoint --lib --locked
+```
 
-## Policy boundaries
+A rebuilt artifact must match the reviewed release hash before deployment. Do not
+replace the pinned artifact or upstream fixture without rerunning execution tests.
 
-No added Enigma fee. Deposits are final; dependency failures can strand funds.
-The 0.02 SOL creation budget is separate from buying SOL; unused budget returns
-to the creator, and observed setup costs are reimbursed to the finalizer.
-Per-wallet caps do not establish human uniqueness. Upgrade authority and Pump
-program dependencies remain explicit trust boundaries. No audit is claimed.
+## Release
 
-See [release notes](docs/RELEASE.md), [program reference](programs/enigma/README.md)
-and [design references](docs/DESIGN.md).
+`npm run release:preflight` verifies current mainnet, the v2 artifact, the complete
+pinned Stonk executable and rent. It only reads. The October 28 conservative
+available balance was **1.345707280 SOL**, including a temporary buffer and a
+0.02 SOL network allowance; refresh before review. This is separate from STONK
+contributions and launch acceptance. No spending is authorized by this estimate.
+
+Development-only `/lab/deploy` is a wallet-owned initial-release console with
+exact stage verification, simulation, bounded costs and signed-wire recovery.
+It uploads the exact v2 artifact, deploys under the connected wallet's retained
+upgrade authority and initializes v2 state. It never enables public deposits.
+Both the page and its deployment endpoint are 404 in production.
+
+Before customer activation: verify finalized program/code/authority/config,
+publish the reviewed deployment identity, run separately reviewed capped funded
+launch/claim acceptance, record finalized receipts, and enable the server write
+flag only after those receipts verify. Transactions fit without a lookup table.
+
+Vercel is the owner's selected website host. Configure server-only
+`SOLANA_RPC_URL` and `BLOB_READ_WRITE_TOKEN`, and keep `ENIGMA_WRITES_ENABLED=false`
+until acceptance. Wallet keys never enter chat, the server or hosting variables.
+
+## Custody
+
+Deposits are final. This release has no failed-launch refund or withdrawal
+instruction. Rule/config changes and dependency failures can strand deposits.
+A wallet must finalize; no funded automatic keeper is promised. Caps apply to
+addresses, not humans. The deployment wallet retains upgrade authority. Stonk's
+program has its own authorities. Rounding dust stays in the vault. No independent
+audit or guaranteed launch result is claimed.
+
+See [mainnet status](docs/ENIGMA_2_MAINNET.md) and [release evidence](docs/ENIGMA_2_RELEASE_PLAN_2026-10-28.json).

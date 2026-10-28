@@ -1,76 +1,84 @@
-# Enigma 2 mainnet preparation — October 27, 2026
+# Enigma 2 release status — October 28, 2026
 
-**Not mainnet-ready.** The previous checkpoint established a development
-direction, not a Stonk implementation. Supplying a funding wallet alone cannot
-complete this release.
+**Contract/client implemented and isolated execution passed. Mainnet deployment,
+funded public acceptance and customer activation remain pending.**
 
-## Owner decisions and inputs
+## Implemented and verified
 
-- Confirmed: pool STONK, mint
-  `6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx`, nine decimals.
-- Confirmed: Stonk.fun is the sole execution venue. SOL is for fees/rent.
-- Funding-wallet public address: owner will provide later. The planned wallet
-  retains upgrade authority. Code work and isolated tests do not need it.
-- Once a distinct v2 artifact and tests pass, prepare a fresh wallet-specific
-  deployment quote and separate capped acceptance plan for wallet review. No
-  v2 spending amount is requested now; v1's estimate is inapplicable.
-- Verify the production server's RPC and metadata-storage access before hosting
-  v2. Existing server credentials can be reused where suitable; never put them
-  or a wallet seed/private key in source, frontend configuration or chat.
+- Independent versioned v2 Rust state and STONK SPL escrow; no Pump CPI.
+- Locked whole-minute windows, cumulative caps and exact Stonk integer reserves.
+- Official standard LaunchLab Token-2022 mint creation without transfer fees and
+  pooled buy in one atomic transaction. Actual fills and pool identities checked.
+- Actual token/unused-STONK beneficiary claims, rent-budget reimbursement/refund,
+  duplicate rejection and integer rounding conservation.
+- Actual pinned LaunchLab executable in LiteSVM. Full two-depositor lifecycle,
+  wrong authority/account/rule tests, wallet caps, whole-minute windows, atomic
+  first-deposit rollback and app buy/sell builders pass with synthetic balances.
+- Real loader-v3 deployment of the exact v2 artifact and restart without repeated
+  funding: 157 synthetic transactions, largest wire 1,112 bytes. Atomic launch is
+  1,043 bytes; app trades are 825 bytes. No lookup table is needed.
+- Exact signed-wire recovery is scoped to Enigma 2's program and wallet. Wallet
+  reviews distinguish STONK transfers from SOL rent/network effects and reject
+  unexpected STONK debits or missing simulation evidence.
+- V2-only deployment tooling, a distinct hash-checked artifact, pinned upstream
+  bytecode verification and a current read-only rent plan are prepared.
+- Public readiness requires finalized deployed bytes, loader/authority/config,
+  current pinned Stonk bytecode and funded acceptance receipts. Flags alone do
+  not authorize public actions.
 
-## Completed preparation
+Artifact: releases/v2/enigma2.so, 130136 bytes.
+SHA-256: c57c1938c3027c87ca18f1d230399ea500a48417f2d251a1f1ae112e7985ef4e.
+Stonk code pin: 4c87da8e9fdeda6daf9d141e409577733d6248ae78f694557176fe2709a09657,
+deployment slot 446221802. Refresh the read-only preflight before funding.
 
-- A distinct v2 release descriptor records STONK, the standard Stonk platform
-  and LaunchLab program; no v1 program/hash is presented as a v2 artifact.
-- Readiness, transaction simulation/submission, local deployment and v1
-  funding/preflight entrypoints fail closed in this repository, including when a
-  caller supplies a verified state or enables the old environment flag.
-- Operations and site metadata identify v2's actual pending state. No obsolete
-  Pump deployment estimate is offered as the v2 funding requirement.
-- A repeatable read-only Stonk checker validates fresh pricing and finalized
-  program/platform/config/mint/curve-rule identities, supported token shape,
-  allowlist enforcement, integer reserves and fees. It never signs or submits.
-- Public read snapshots and adversarial verification tests are isolated from
-  live activity. The October 27 venue report is in
-  `ENIGMA_2_VENUE_CHECK_2026-10-27.json`. It explicitly reports that bytecode
-  pinning, a v2 artifact and lifecycle/public acceptance are outstanding.
+## Concrete deployment review
 
-The observed standard rule requires Token-2022 without a transfer-fee extension.
-Observed fees are 2,500 protocol + 10,000 platform + 0 creator, each per 1,000,000
-(1.25% combined). These are a read snapshot, not locked future fees. API
-allowlist flags differed from onchain enforcement; both are recorded.
+The October 28 mainnet rent plan is recorded in
+ENIGMA_2_RELEASE_PLAN_2026-10-28.json. Conservative available balance:
+1.345707280 SOL = retained deposits 0.663778200 + temporary buffer 0.661929080 +
+maximum network allowance 0.020000000. This is a refreshed estimate, not spending
+approval. Temporary/retained storage recovery depends on authority and account
+shutdown. Program/config deposits 0.001808480 SOL have no recovery instruction in
+this release. Actual network fees are spent.
 
-## Engineering required before funding review
+The owner said the wallet address will be supplied later. It is not needed for
+isolated work. `/lab/deploy` derives the actual program and buffer from a connected
+wallet and the reviewed hash. The wallet retains upgrade authority. No additional
+signer key or private-key upload is needed.
 
-1. Implement STONK SPL escrow and beneficiary claims. Existing Rust `file`,
-   `commit`, `launch` and `claim` still assume native SOL and Pump semantics.
-2. Implement versioned v2 account state and LaunchLab create/buy CPI with fixed
-   official identities, verified configs/rules, atomic mint/buy and actual-fill
-   accounting. V1's binary and loader identity are not a v2 release.
-3. Bind curve terms, fee bounds and rent budget at the correct review stages.
-   Replace Pump reserve/cap assumptions with STONK LaunchLab allocation math.
-4. Migrate client instructions, account decoders, metadata, discovery, trade
-   builders, receipt verification, market links and wallet reviews to STONK.
-   Preserve exact signed-wire recovery and beneficiary/program scoping.
-5. Install/pin the Rust/SBF build toolchain in the build environment and produce
-   a distinct v2 artifact. This workspace currently has Node but no Cargo or
-   SBF compiler. Pin and snapshot upstream executable code for execution tests.
-6. Pass isolated full lifecycle and adverse tests: timed window, two depositors,
-   per-wallet cap, atomic Stonk launch/buy, both claims, rounding conservation,
-   wrong account/owner/program, rule/config changes, replay and restart recovery.
-7. Derive the owner-wallet release identity, quote its actual artifact rent,
-   prepare exact reviewed deployment stages, verify finalized code/authority/
-   config/table, then perform separately reviewed capped public acceptance.
-   Public deposits remain disabled until the evidence is complete.
+After wallet review and deployment: verify finalized bytes, slot, authority and
+v2 config; update the reviewed public descriptor while leaving executionAccepted
+and ENIGMA_WRITES_ENABLED false. Prepare a separately bounded funded acceptance
+plan. Suggested shape: one-minute window, two small STONK deposits, atomic Stonk
+mint/buy, both original-beneficiary claims and recovery/replay checks. Do not send
+anything until its actual SOL/STONK limits and recipients are reviewed.
 
-## Validation of this preparation
+Publish the finalized launch and claim signatures in the acceptance descriptor.
+The server verifies successful atomic Stonk instructions and actual token delivery
+to distinct recorded beneficiaries before public writes can be enabled.
 
-The application tests cover inherited v1 behavior plus the new v2 release
-guards and Stonk read verifier. Passing them does not mean a v2 contract ran.
-This preparation passed 29 application tests, TypeScript and the production
-build. The production dependency audit reported zero vulnerabilities. Local
-production HTTP checks confirmed paused STONK readiness, an empty feed, the
-development deployment endpoint returning 404, updated operations content and
-rejected transaction submission. A fresh public venue-account check passed.
-No Enigma 2 contract execution test, deployment, funded launch, purchase, claim
-or activation occurred during this preparation.
+## Website activation inputs
+
+The owner selected Vercel using the existing setup. The CLI is logged out of that
+account. A temporary working preview is published at
+https://instant-zircon-erohi6z.tmp.now. The owner must claim it into the existing
+account before it expires; the claim link is shared privately in chat. Persistent
+production hosting and resource setup still require that account connection.
+
+Verify SOLANA_RPC_URL and BLOB_READ_WRITE_TOKEN in Vercel's server environment;
+reuse existing account resources where appropriate. Neither wallet keys nor
+server credentials belong in chat/frontend/source. ENIGMA_WRITES_ENABLED remains
+false until contract deployment and funded acceptance are complete.
+
+No public deployment, funded token launch/trade/claim or financial activation
+occurred during this implementation. VM execution is not mainnet acceptance.
+
+## Validation of the final artifact
+
+31 application/receipt/guard tests and six Stonk VM tests pass. The VM tests
+include native app buy/sell instructions and actual loader deployment/restart.
+Two native Rust math tests pass. TypeScript and the Next production build pass;
+production dependency audit reports zero vulnerabilities. Live HTTP checks cover
+homepage/docs/operations, readiness/feed, rejected unreviewed transactions and
+production 404s for development-only tools. Synthetic transactions are never
+reported as public activity. No funded public acceptance has occurred.

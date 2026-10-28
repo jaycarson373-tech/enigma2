@@ -1,0 +1,36 @@
+{
+  "scope": "READ_ONLY_ENIGMA2_RELEASE_PLAN",
+  "codeHash": "c57c1938c3027c87ca18f1d230399ea500a48417f2d251a1f1ae112e7985ef4e",
+  "codeBytes": 130136,
+  "artifactVerified": true,
+  "upstreamVerified": true,
+  "upstream": {
+    "program": "LanMV9sAd7wArD4vJFi2qDdfnVhFxYSUg6eADduJ3uj",
+    "programData": "D2QX47Tv2uhNNwFcnLCyJtLMZ4WGmc7eXxvyEmD6zNUh",
+    "codeHash": "4c87da8e9fdeda6daf9d141e409577733d6248ae78f694557176fe2709a09657",
+    "codeBytes": 2560000,
+    "slot": "446221802"
+  },
+  "identity": null,
+  "rentLamports": {
+    "program": "833120",
+    "programData": "661969720",
+    "buffer": "661929080",
+    "config": "975360"
+  },
+  "retained": "663778200",
+  "temporaryBuffer": "661929080",
+  "networkAllowance": "20000000",
+  "conservativeBalance": "1345707280",
+  "notReclaimableByCurrentCode": "1808480",
+  "quoteAsset": "STONK",
+  "creationBudgetLamports": "20000000",
+  "creationBudgetSeparateFromDeployment": true,
+  "lookupTableRequired": false,
+  "isolatedExecutionPassed": true,
+  "publicExecutionAccepted": false,
+  "mainnetReady": false,
+  "activation": false,
+  "realFundsSpent": false,
+  "checkedAt": "2026-10-28T15:04:58.007Z"
+}

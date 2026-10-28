@@ -1,0 +1,13 @@
+.git
+.next
+node_modules
+target
+programs
+fixtures
+tests
+scripts
+Cargo.toml
+Cargo.lock
+.env*
+!.env.example
+*.tsbuildinfo

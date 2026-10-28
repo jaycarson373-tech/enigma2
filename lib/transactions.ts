@@ -15,9 +15,20 @@ import {
   type TransactionSigner,
   type Transaction,
 } from "@solana/kit";
-import { bytes64, decodeOffering } from "./protocol.mjs";
-import { PROGRAM } from "./constants.mjs";
-import { requireSimulation, requireLamports, requireNetworkFee } from "./simulation.mjs";
+import {
+  bytes64,
+  v2Client,
+  STONK,
+  TOKEN,
+  keyBytes,
+} from "./stonk-protocol.mjs";
+const { decodeOffering } = v2Client;
+import { V2_PROGRAM as PROGRAM } from "./stonk-protocol.mjs";
+import {
+  requireSimulation,
+  requireLamports,
+  requireNetworkFee,
+} from "./simulation.mjs";
 export type Pending = {
   wallet: string;
   signature: string;
@@ -29,7 +40,7 @@ export type Pending = {
   state: string;
 };
 export const storageKey = (wallet: string) =>
-  `enigma:mainnet:${PROGRAM}:${wallet}`;
+  `enigma2:mainnet:${PROGRAM}:${wallet}`;
 export const loadPending = (wallet: string): Pending | null => {
   try {
     const p = JSON.parse(localStorage.getItem(storageKey(wallet)) || "null");
@@ -139,36 +150,92 @@ export async function prepareWalletTransaction(
       address(a),
     ),
   };
-  message = compressTransactionMessageUsingAddressLookupTables(
-    message,
-    tables,
-  ) as typeof message;
+  if (plan.lookupTable?.addresses?.length)
+    message = compressTransactionMessageUsingAddressLookupTables(
+      message,
+      tables,
+    ) as typeof message;
   let unsigned = compileTransaction(message);
   assertIsTransactionWithinSizeLimit(unsigned);
   if (mintSigner)
     unsigned = await partiallySignTransaction([mintSigner.keyPair], unsigned);
   const wire = getBase64EncodedWireTransaction(unsigned);
+  const quoteAccount = await v2Client.tokenAddress(STONK, plan.wallet, TOKEN);
+  const quoteBalance = (account: any): bigint => {
+    if (!account) return 0n;
+    const data = bytes64(account.data?.[0] || "");
+    if (
+      account.owner !== TOKEN ||
+      data.length !== 165 ||
+      data[108] !== 1 ||
+      !keyBytes(STONK).every((b, i) => data[i] === b) ||
+      !keyBytes(plan.wallet).every((b, i) => data[32 + i] === b)
+    )
+      throw Error("The STONK account could not be verified.");
+    return new DataView(
+      data.buffer,
+      data.byteOffset,
+      data.byteLength,
+    ).getBigUint64(64, true);
+  };
+  const balanceBefore = requireLamports(
+    (await rpcCall("getBalance", [plan.wallet, { commitment: "confirmed" }]))
+      .value,
+  );
+  const quoteBefore = quoteBalance(
+    (
+      await rpcCall("getAccountInfo", [
+        quoteAccount,
+        { encoding: "base64", commitment: "confirmed" },
+      ])
+    ).value,
+  );
   const simulated = await rpcCall("simulateTransaction", [
     wire,
     {
       encoding: "base64",
       sigVerify: false,
       commitment: "confirmed",
-      accounts: plan.offering
-        ? { encoding: "base64", addresses: [plan.offering, plan.wallet] }
-        : undefined,
+      accounts: {
+        encoding: "base64",
+        addresses: [plan.offering || plan.wallet, plan.wallet, quoteAccount],
+      },
     },
   ]);
   requireSimulation(simulated);
+  const balanceAfterCheck = requireLamports(
+    (await rpcCall("getBalance", [plan.wallet, { commitment: "confirmed" }]))
+      .value,
+  );
+  const quoteAfterCheck = quoteBalance(
+    (
+      await rpcCall("getAccountInfo", [
+        quoteAccount,
+        { encoding: "base64", commitment: "confirmed" },
+      ])
+    ).value,
+  );
+  if (balanceAfterCheck !== balanceBefore || quoteAfterCheck !== quoteBefore)
+    throw Error("The wallet balance changed during simulation. Review again.");
+  const simulatedBalance = simulated.value.accounts?.[1]?.lamports;
+  if (simulatedBalance == null)
+    throw Error("The simulated SOL balance is unavailable.");
+  const debit =
+    balanceBefore - requireLamports(simulatedBalance, "Simulated balance");
+  const quoteDelta = quoteBalance(simulated.value.accounts?.[2]) - quoteBefore;
+  const expectedDebit = BigInt(plan.details.quoteDebitRaw || "0");
+  if (
+    quoteDelta < -expectedDebit ||
+    (["create", "deposit", "buy"].includes(plan.action) &&
+      quoteDelta !== -expectedDebit)
+  )
+    throw Error("The simulated STONK debit does not match the review.");
   let simulatedBook = null;
   const a = simulated.value.accounts?.[0];
-  if (a)
+  if (a && plan.offering)
     try {
       simulatedBook = await decodeOffering(a, plan.offering);
     } catch {}
-  const balanceBefore=requireLamports((await rpcCall("getBalance",[plan.wallet,{commitment:"confirmed"}])).value);
-  const simulatedBalance=simulated.value.accounts?.[1]?.lamports;
-  const debit=simulatedBalance==null?null:balanceBefore-requireLamports(simulatedBalance,"Simulated balance");
   const fee = (
     await rpcCall("getFeeForMessage", [
       getBase64Decoder().decode(unsigned.messageBytes),
@@ -181,7 +248,8 @@ export async function prepareWalletTransaction(
     block,
     simulatedAt: Date.now(),
     networkFee: String(fee),
-    simulatedDebit:debit==null?null:String(debit),
+    simulatedDebit: String(debit),
+    simulatedQuoteDelta: String(quoteDelta),
     compute: simulated.value.unitsConsumed,
     simulatedBook,
     wireBytes: atob(wire).length,

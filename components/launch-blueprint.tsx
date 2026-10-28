@@ -110,7 +110,7 @@ function LaunchBlueprint({ minutes, capBps, onMinutes }: Props) {
       </div>
       <div className="console-policy">
         <span>
-          POOL IN <b>SOL</b>
+          POOL IN <b>STONK</b>
         </span>
         <span>
           WALLET CAP <b>{Number(capBps) / 100}%</b>

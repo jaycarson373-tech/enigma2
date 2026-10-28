@@ -21,7 +21,7 @@ const compact = (n: number) =>
     notation: "compact",
     maximumFractionDigits: 2,
   }).format(n);
-const phases = ["Open pools", "On Pump.fun", "Graduated"];
+const phases = ["Open pools", "On Stonk.fun", "Graduated"];
 function countdown(end: number, now: number) {
   const s = Math.max(0, end - now);
   return s >= 3600
@@ -43,7 +43,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
     [now, setNow] = useState(0),
     [lens, setLens] = useState<any>(null),
     [receipt, setReceipt] = useState<any>(null),
-    [amount, setAmount] = useState("0.05"),
+    [amount, setAmount] = useState("50"),
     [side, setSide] = useState<"buy" | "sell">("buy"),
     [slippage, setSlippage] = useState("1"),
     [review, setReview] = useState<any>(null),
@@ -528,11 +528,11 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
             <section className="stats" aria-label="Verified protocol activity">
               <div>
                 <span>
-                  SOL pooled <small>ENIGMA TOTAL</small>
+                  STONK pooled <small>ENIGMA TOTAL</small>
                 </span>
                 <strong>
                   {feed ? units(feed.stats.pooledRaw) : "—"}
-                  <em>SOL</em>
+                  <em>STONK</em>
                 </strong>
               </div>
               <div>
@@ -572,7 +572,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                       {feed ? filtered.length : "…"}
                     </span>
                   </div>
-                  <p>Pool SOL for a timed opening. Create the coin and make the first buy together.</p>
+                  <p>Pool STONK for a timed opening. Create the coin and make the first buy together.</p>
                 </div>
                 <div className="board-controls">
                   <details className="opening-explainer">
@@ -583,7 +583,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                     <div>
                       <b>Before the first trade.</b>
                       <p>
-                        A public 1–60 minute window pools SOL before the coin
+                        A public 1–60 minute window pools STONK before the coin
                         exists. At close, one transaction creates the coin and
                         makes the pool’s first buy. Participants claim the
                         tokens purchased for them, subject to locked wallet
@@ -809,7 +809,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                                             )
                                           : "Indexing"}{" "}
                                       <small>
-                                        {(i === 0 || o.curve) && "SOL"}
+                                        {(i === 0 || o.curve) && "STONK"}
                                       </small>
                                     </b>
                                   </div>
@@ -849,7 +849,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                                   <span>
                                     {i === 0
                                       ? `${o.capBps / 100}% cap`
-                                      : `Pool ${units(o.raised)} SOL`}
+                                      : `Pool ${units(o.raised)} STONK`}
                                   </span>
                                   <button
                                     className={i === 0 ? "join" : "trade"}
@@ -1156,7 +1156,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                     </label>
                   </div>
                   <label>
-                    Your first deposit <small>optional · SOL</small>
+                    Your first deposit <small>optional · STONK</small>
                     <input
                       type="text"
                       inputMode="decimal"
@@ -1230,7 +1230,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                   </div>
                   <div>
                     <dt>Trading pair</dt>
-                    <dd>{form.symbol || "COIN"} / SOL</dd>
+                    <dd>{form.symbol || "COIN"} / STONK</dd>
                   </div>
                   <div>
                     <dt>Creation budget</dt>
@@ -1242,7 +1242,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                   </div>
                   <div>
                     <dt>Creator fee</dt>
-                    <dd>Pump.fun standard</dd>
+                    <dd>Stonk.fun standard</dd>
                   </div>
                 </dl>
                 <p>
@@ -1317,7 +1317,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                           </div>
                           <div>
                             <small>Committed</small>
-                            <b>{units(p.committed)} SOL</b>
+                            <b>{units(p.committed)} STONK</b>
                           </div>
                           <div>
                             <small>
@@ -1510,7 +1510,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                   <span>
                     {activeLens.status === "open"
                       ? "Deposit window"
-                      : "Pump.fun market"}
+                      : "Stonk.fun market"}
                   </span>
                 </p>
               </div>
@@ -1542,7 +1542,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
             <div className="lens-stats">
               <div>
                 <small>Pool committed</small>
-                <b>{units(activeLens.raised)} SOL</b>
+                <b>{units(activeLens.raised)} STONK</b>
               </div>
               <div>
                 <small>Wallet cap</small>
@@ -1562,10 +1562,10 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                       <b>{countdown(activeLens.closesAt, now)}</b>
                     </div>
                     <label className="amount-input">
-                      Your deposit<span>SOL</span>
+                      Your deposit<span>STONK</span>
                       <input
                         inputMode="decimal"
-                        aria-label="Deposit SOL"
+                        aria-label="Deposit STONK"
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}
                       />
@@ -1573,7 +1573,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                     <div className="quick-amounts">
                       {["0.025", "0.05", "0.1"].map((a) => (
                         <button key={a} onClick={() => setAmount(a)}>
-                          {a} SOL
+                          {a} STONK
                         </button>
                       ))}
                     </div>
@@ -1587,7 +1587,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                       </div>
                       <div>
                         <dt>Enigma protocol fee</dt>
-                        <dd>0% · Pump.fun fees apply</dd>
+                        <dd>0% · Stonk.fun fees apply</dd>
                       </div>
                     </dl>
                     <button
@@ -1642,7 +1642,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 </div>
                 <label className="amount-input">
                   {side === "buy" ? "You pay" : "You sell"}
-                  <span>{side === "buy" ? "SOL" : activeLens.symbol}</span>
+                  <span>{side === "buy" ? "STONK" : activeLens.symbol}</span>
                   <input
                     aria-label="Trade amount"
                     inputMode="decimal"
@@ -1675,12 +1675,12 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                   <Icon name="arrow" size={15} />
                 </button>
                 <a
-                  href={"https://pump.fun/coin/" + activeLens.mint}
+                  href={"https://www.stonkfun.xyz/token/" + activeLens.mint}
                   className="external-market"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Open Pump.fun market <Icon name="arrow-up" size={13} />
+                  Open Stonk.fun market <Icon name="arrow-up" size={13} />
                 </a>
               </>
             )}
@@ -1716,7 +1716,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 <Icon name="chevron" size={13} />
               </summary>
               <p>
-                Trading pair: {activeLens.symbol} / SOL. Custody: Enigma v1
+                Trading pair: {activeLens.symbol} / STONK. Custody: Enigma 2
                 program escrow. Wallet caps apply per address; they do not
                 verify unique people.
               </p>
@@ -1781,7 +1781,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 <dt>Wallet</dt>
                 <dd title={review.plan.wallet}>{short(review.plan.wallet)}</dd>
               </div>
-              {Object.entries(review.plan.details).map(([k, v]) => (
+              {Object.entries(review.plan.details).filter(([k]) => !["quoteDebitRaw", "raise", "quoteMint", "creationBudgetSymbol"].includes(k)).map(([k, v]) => (
                 <div key={k}>
                   <dt>
                     {(
@@ -1790,14 +1790,14 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                         symbol: "Ticker",
                         duration: "Window · seconds",
                         capBps: "Wallet cap · basis points",
-                        initialDeposit: "First deposit · SOL",
+                        initialDeposit: "First deposit · STONK",
                         creationBudget: "Creation budget · SOL",
                         amount: "Amount",
                         estimatedOut: "Estimated output",
                         minimumOut: "Minimum output",
                         outSymbol: "Output asset",
                         slippageBps: "Slippage · basis points",
-                        poolSol: "Pooled first buy · SOL",
+                        poolStonk: "Pooled first buy · STONK",
                         mint: "New mint",
                         creatorFeeBps: "Creator fee · 0 means standard",
                         refunds: "Refunds",
@@ -1823,7 +1823,13 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               {review.prepared.simulatedBook && (
                 <div>
                   <dt>Enigma protocol fee</dt>
-                  <dd>0% · Pump.fun fees apply</dd>
+                  <dd>0% · Stonk.fun fees apply</dd>
+                </div>
+              )}
+              {review.prepared.simulatedQuoteDelta != null && (
+                <div>
+                  <dt>Simulated STONK change</dt>
+                  <dd>{BigInt(review.prepared.simulatedQuoteDelta) < 0n ? '−' : '+'}{units(BigInt(review.prepared.simulatedQuoteDelta) < 0n ? -BigInt(review.prepared.simulatedQuoteDelta) : BigInt(review.prepared.simulatedQuoteDelta))} STONK</dd>
                 </div>
               )}
               <div>

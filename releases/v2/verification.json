@@ -1,0 +1,21 @@
+{
+  "scope": "ENIGMA2_ISOLATED_RELEASE_VERIFICATION",
+  "checkedAt": "2026-10-28T15:12:10.871250+00:00",
+  "codeHash": "c57c1938c3027c87ca18f1d230399ea500a48417f2d251a1f1ae112e7985ef4e",
+  "codeBytes": 130136,
+  "applicationTestsPassed": 31,
+  "stonkVmTestsPassed": 6,
+  "nativeMathTestsPassed": 2,
+  "productionBuildPassed": true,
+  "productionAuditVulnerabilities": 0,
+  "atomicLaunchBytes": 1043,
+  "tradeBytes": 825,
+  "loaderMaxBytes": 1112,
+  "loaderSyntheticTransactions": 157,
+  "publicTransactionsSent": 0,
+  "mainnetDeploymentVerified": false,
+  "fundedPublicAcceptancePassed": false,
+  "publicWritesEnabled": false,
+  "preview": "https://instant-zircon-erohi6z.tmp.now",
+  "persistentVercelOwnershipConfirmed": false
+}

@@ -1,4 +1,4 @@
-import { tradeQuote } from "@/lib/trade.mjs";
+import { tradeQuote } from "@/lib/stonk-trade.mjs";
 import { body, sameOrigin, publicError } from "@/lib/http.mjs";
 export const runtime = "nodejs";
 export const maxDuration = 30;

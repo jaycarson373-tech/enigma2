@@ -35,7 +35,7 @@ contains integration references in `lib/solana/stonk-launchlab.ts` and
 Those references are starting points to reverify, not proof of current deployment
 compatibility. Use the supported direct LaunchLab flow, not the retired fee API.
 
-## Required implementation work
+## Original implementation checklist (completed October 28; see current release status)
 
 - Replace the Pump-specific onchain create/buy CPI and client builders with the
   verified Stonk LaunchLab equivalents. Validate actual received tokens, pool,
@@ -53,29 +53,21 @@ compatibility. Use the supported direct LaunchLab flow, not the retired fee API.
   timed-pool/deposit/atomic launch-buy/claim lifecycle and adverse cases against
   Stonk dependencies before a separately reviewed deployment and funded test.
 
-## Status of this checkpoint
+## Current status
 
-The version split and Stonk-only scope are recorded. Runtime migration is
-**not implemented** by this checkpoint. Inherited source, `releases/v1/enigma.so`,
-the `built-not-deployed` v1 manifest and historical test results remain v1
-reference material. They must never be published as an Enigma 2 Stonk release.
-No program deployment, site deployment, activation or transaction is included.
+The independent v2 contract, STONK client, Stonk-native trades and deployment
+runner are implemented. The exact v2 artifact passes full lifecycle, adverse and
+loader deployment/restart tests in an isolated VM using the real pinned Stonk
+program. Public deployment and funded acceptance remain outstanding.
 
-## Mainnet preparation
+The descriptor is `lib/enigma2-release.mjs`, status `built-not-deployed`.
+The artifact is `releases/v2/enigma2.so`. Historical v1 files remain references;
+they are not used by v2 APIs or the v2 deployment runner. The read-only release
+planner now quotes and verifies v2 exclusively.
 
-The active v2 release identity is `lib/enigma2-release.mjs`. Its status is
-`implementation-pending`, with no v2 program, artifact or code hash. Readiness,
-transaction simulation/submission and the local deployment endpoint fail closed.
-The old `release:plan` and `release:preflight` entrypoints reject this repository so
-they cannot quote or verify the Pump artifact as v2. V1 VM/helper tests remain
-historical verification only.
-
-`npm run preflight:stonk` performs public pricing and finalized mainnet account
-reads for the chosen STONK quote. It verifies program/platform/config identities,
-quote ownership/decimals, curve rules, allowlist enforcement and live fees. It
-does not pin upstream bytecode, prepare transactions, test the v2 contract or
-establish mainnet readiness. A successful venue check still reports
-`mainnetReady: false`. Fixtures are explicitly historical read snapshots.
+The owner chose Vercel and will provide the funding wallet later. See
+[mainnet status](ENIGMA_2_MAINNET.md) for current execution evidence, funding
+estimate and remaining account/deployment steps.
 
 ## Repository separation
 

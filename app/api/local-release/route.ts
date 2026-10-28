@@ -1,39 +1,35 @@
-// Wallet-owned deployment tooling is LOCAL DEVELOPMENT ONLY, unavailable on Vercel.
+// Wallet-owned initial deployment tooling. Always 404 in production.
 import { readFile } from "node:fs/promises";
-import { sameOrigin } from "@/lib/http.mjs";
-import { rpc, cached } from "@/lib/server.mjs";
 import { address } from "@solana/kit";
+import { sameOrigin } from "@/lib/http.mjs";
+import { rpc, cached, stonkTerms } from "@/lib/server.mjs";
 import {
   assertArtifact,
   releaseIdentity,
   spendPlan,
   releaseStageInstructions,
-} from "@/lib/release-flow.mjs";
+} from "@/lib/release-v2-flow.mjs";
 import { verifyReleaseWire } from "@/lib/release-wire.mjs";
-import legacy from "@/lib/pump-legacy.cjs";
-import { PUMP_GLOBAL } from "@/lib/constants.mjs";
-import { assertEnigma2Implemented } from "@/lib/enigma2-release.mjs";
+import { enigma2Release } from "@/lib/enigma2-release.mjs";
 export const runtime = "nodejs";
 export const maxDuration = 30;
 async function context(wallet: string) {
-  assertEnigma2Implemented();
   const code = new Uint8Array(
-    await readFile(process.cwd() + "/releases/v1/enigma.so"),
+    await readFile(process.cwd() + "/" + enigma2Release.artifact),
   );
   await assertArtifact(code);
   if (
     (await rpc("getGenesisHash")) !==
     "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d"
   )
-    throw Error("Wrong network.");
-  const common = await cached("local-release-inputs", 15000, async () => {
+    throw Error("Wrong network");
+  const inputs = await cached("local-v2-release", 15000, async () => {
     const rent: Record<string, string> = {};
     for (const [k, n] of Object.entries({
       program: 36,
       programData: 45 + code.length,
       buffer: 37 + code.length,
-      config: 136,
-      addressTable: 56 + 32 * 27,
+      config: 64,
     }))
       rent[k] = String(
         await rpc("getMinimumBalanceForRentExemption", [
@@ -41,31 +37,11 @@ async function context(wallet: string) {
           { commitment: "finalized" },
         ]),
       );
-    const a = (
-      await rpc("getAccountInfo", [
-        PUMP_GLOBAL,
-        { encoding: "base64", commitment: "finalized" },
-      ])
-    ).value;
-    if (a?.owner !== "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P")
-      throw Error("Pump configuration identity failed.");
-    const global = legacy.pump.PUMP_SDK.decodeGlobal({
-      ...a,
-      owner: new legacy.web3.PublicKey(a.owner),
-      data: Buffer.from(a.data[0], "base64"),
-    });
-    return {
-      rent,
-      pumpGlobal: {
-        feeRecipient: global.feeRecipient.toBase58(),
-        buybackFeeRecipients: global.buybackFeeRecipients.map((k: any) =>
-          k.toBase58(),
-        ),
-      },
-    };
+    await stonkTerms();
+    return { rent };
   });
-  if (common.stale) throw Error("Release input verification is stale.");
-  return { code, identity: await releaseIdentity(wallet), ...common };
+  if (inputs.stale) throw Error("Stale release inputs");
+  return { code, identity: await releaseIdentity(wallet), ...inputs };
 }
 export async function GET(req: Request) {
   if (process.env.NODE_ENV !== "development")
@@ -75,14 +51,14 @@ export async function GET(req: Request) {
         address(new URL(req.url).searchParams.get("wallet") || ""),
       ),
       c = await context(wallet);
-    const balance = (
-      await rpc("getBalance", [wallet, { commitment: "finalized" }])
-    ).value;
     return Response.json(
       {
         ...c,
         code: Buffer.from(c.code).toString("base64"),
-        balance: String(balance),
+        balance: String(
+          (await rpc("getBalance", [wallet, { commitment: "finalized" }]))
+            .value,
+        ),
         cost: spendPlan(c.rent),
         cluster: "mainnet-beta",
       },
@@ -92,7 +68,7 @@ export async function GET(req: Request) {
     return Response.json(
       {
         error:
-          "Deployment inputs could not be verified. No payment was requested.",
+          "Enigma 2 release inputs could not be verified. No payment was requested.",
       },
       { status: 503 },
     );
@@ -126,7 +102,7 @@ export async function POST(req: Request) {
         c.identity,
         c.code,
         c.rent,
-        c.pumpGlobal,
+        null,
         b.stage,
       );
     verifyReleaseWire(
@@ -145,7 +121,7 @@ export async function POST(req: Request) {
     return Response.json(
       {
         error:
-          "The deployment stage could not be verified. The saved transaction is retained; no replacement payment was requested.",
+          "The exact Enigma 2 deployment stage could not be verified. Recover the saved transaction before requesting another payment.",
       },
       { status: 400 },
     );

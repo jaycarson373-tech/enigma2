@@ -1,4 +1,5 @@
 "use client";
+import Brand from "./brand";
 import { useEffect, useRef, useState } from "react";
 import {
   getBase64Decoder,
@@ -280,7 +281,7 @@ export default function ReleaseConsole() {
             save,
           });
           setMessage(
-            "Enigma 2 deployment, code hash, authority and initialization verified. Public launches remain paused for the separately capped acceptance test.",
+            "Openbell v2 deployment, code hash, authority and initialization verified. Public launches remain paused for the separately capped acceptance test.",
           );
           setPlan({ ...plan, result });
           break;
@@ -305,9 +306,7 @@ export default function ReleaseConsole() {
   return (
     <>
       <header className="site-header">
-        <a className="brand" href="/">
-          enigma
-        </a>
+        <Brand />
         <span>Local release console</span>
         <div className="header-actions">
           <WalletButton />

@@ -1,4 +1,4 @@
-# Enigma 2 release status — October 28, 2026
+# Openbell release status — updated October 29, 2026
 
 **Contract/client implemented and isolated execution passed. Mainnet deployment,
 funded public acceptance and customer activation remain pending.**
@@ -60,10 +60,12 @@ to distinct recorded beneficiaries before public writes can be enabled.
 ## Website activation inputs
 
 The owner selected Vercel using the existing setup. The CLI is logged out of that
-account. A temporary working preview is published at
-https://instant-zircon-erohi6z.tmp.now. The owner must claim it into the existing
-account before it expires; the claim link is shared privately in chat. Persistent
-production hosting and resource setup still require that account connection.
+account. The October 28 temporary preview at
+https://instant-zircon-erohi6z.tmp.now expired and returned 404 on October 29.
+The finished Openbell redesign passes its production build and browser checks
+locally. Publishing into the existing account requires Vercel sign-in; the CLI
+rejects redeployment of the expired anonymous instance. No current public
+website deployment is claimed. See [redesign verification](OPENBELL_REDESIGN_VERIFICATION.json).
 
 Verify SOLANA_RPC_URL and BLOB_READ_WRITE_TOKEN in Vercel's server environment;
 reuse existing account resources where appropriate. Neither wallet keys nor

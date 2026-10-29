@@ -4,6 +4,7 @@ import { generateKeyPairSigner } from "@solana/kit";
 import WalletButton, { useEnigmaWallet } from "./wallet";
 import Icon from "./icon";
 import XLink from "./x-link";
+import Brand from "./brand";
 import LaunchBlueprint from "./launch-blueprint";
 import { units, raw, allocationEstimate, entitlement } from "@/lib/amounts.mjs";
 import { WINDOW_PRESETS } from "@/lib/constants.mjs";
@@ -478,26 +479,21 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
       <header
         className={"site-header " + (page === "board" ? "terminal-header" : "")}
       >
-        <a className="brand" href="/">
-          <img src="/brand/enigma.svg" width="29" height="29" alt="" />
-          enigma
-          <span className="brand-dot" />
-          <small className="brand-category">LAUNCHPAD</small>
-        </a>
+        <Brand />
         <nav aria-label="Primary navigation">
           <button
             aria-current={page === "board" ? "page" : undefined}
             onClick={() => navigate("board")}
           >
-            Explore
+            Discover
           </button>
           <button
             aria-current={page === "portfolio" ? "page" : undefined}
             onClick={() => navigate("portfolio")}
           >
-            Portfolio
+            My positions
           </button>
-          <a href="/docs">Docs</a>
+          <a href="/docs">Field guide</a>
         </nav>
         <div className="header-actions">
           <span className="network">
@@ -525,54 +521,45 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
         )}
         {page === "board" && (
           <>
-            <section className="stats" aria-label="Verified protocol activity">
-              <div>
-                <span>
-                  STONK pooled <small>ENIGMA TOTAL</small>
-                </span>
-                <strong>
-                  {feed ? units(feed.stats.pooledRaw) : "—"}
-                  <em>STONK</em>
-                </strong>
+            <section className="opening-hero" aria-labelledby="opening-title">
+              <div className="hero-copy">
+                <p className="eyebrow"><span className="hero-kicker-mark" /> A SHARED START ON STONK.FUN</p>
+                <h1 id="opening-title">Big ideas.<br />One <em>opening.</em></h1>
+                <p className="hero-description">Bring your people. Pool your STONK.<br className="desktop-break" /> Make the first buy together.</p>
+                <div className="hero-actions">
+                  <button className="button primary" onClick={() => navigate("create")}>Create an opening <Icon name="arrow" size={17} /></button>
+                  <a className="hero-guide" href="/docs">Meet the mechanics <Icon name="arrow-up" size={15} /></a>
+                </div>
+                <div className="hero-footnote"><span>01—60 min windows</span><i /><span>Wallet caps, locked upfront</span></div>
               </div>
-              <div>
-                <span>Launch windows</span>
-                <strong>
-                  {feed ? feed.stats.launches : "—"}
-                  <em>published onchain</em>
-                </strong>
+              <div className="hero-art" aria-hidden="true">
+                <div className="art-topline"><span>THE OPENBELL METHOD</span><span>№ 001</span></div>
+                <img src="/brand/opening.svg" alt="" width="500" height="320" />
+                <div className="art-caption"><span>Many wallets.<br /><b>One first buy.</b></span><span className="art-stamp">OB<br /><small>EST. 2026</small></span></div>
               </div>
-              <div>
-                <span>Coins launched</span>
-                <strong>
-                  {feed
-                    ? offers.filter((o: any) => o.status === "launched").length
-                    : "—"}
-                  <em>completed launches</em>
-                </strong>
-              </div>
-              <div>
-                <span>Wallet participations</span>
-                <strong>
-                  {feed ? feed.stats.participations : "—"}
-                  <em>across launch pools</em>
-                </strong>
-              </div>
+            </section>
+            <section className="activity-ribbon" aria-label="Verified protocol activity">
+              <span className="ribbon-label"><i /> THE COLLECTIVE, SO FAR</span>
+              <div><strong>{feed ? units(feed.stats.pooledRaw) : "—"}</strong><span>STONK pooled</span></div>
+              <div><strong>{feed ? feed.stats.launches : "—"}</strong><span>openings created</span></div>
+              <div><strong>{feed ? feed.stats.participations : "—"}</strong><span>wallet participations</span></div>
+              <a href="/operations">Release status <Icon name="arrow-up" size={13} /></a>
             </section>
             <section
               className="discovery"
               id="launches"
-              aria-label="Explore Enigma launches"
+              aria-label="Explore Openbell launches"
             >
               <div className="board-toolbar">
                 <div className="scope-title">
                   <div className="board-title">
-                    <h1 id="launchpad-title">Enigma Scope</h1>
+                    <p className="eyebrow">FIND YOUR NEXT OPENING</p>
+                    <h2 id="launchpad-title">The launch directory</h2>
                     <span className="count">
                       {feed ? filtered.length : "…"}
                     </span>
                   </div>
-                  <p>Pool STONK for a timed opening. Create the coin and make the first buy together.</p>
+                  <p>From the first commitment to life on the market.</p>
                 </div>
                 <div className="board-controls">
                   <details className="opening-explainer">
@@ -647,7 +634,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 </div>
               </div>
               <div
-                className="mobile-phases"
+                className="directory-tabs"
                 role="tablist"
                 aria-label="Launch stage"
               >
@@ -655,6 +642,20 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                   <button
                     key={p}
                     role="tab"
+                    id={"stage-tab-" + i}
+                    aria-controls={"stage-panel-" + i}
+                    tabIndex={mobilePhase === i ? 0 : -1}
+                    onKeyDown={(e) => {
+                      let next = i;
+                      if (e.key === "ArrowRight") next = (i + 1) % phases.length;
+                      else if (e.key === "ArrowLeft") next = (i + phases.length - 1) % phases.length;
+                      else if (e.key === "Home") next = 0;
+                      else if (e.key === "End") next = phases.length - 1;
+                      else return;
+                      e.preventDefault();
+                      setMobilePhase(next);
+                      document.getElementById("stage-tab-" + next)?.focus();
+                    }}
                     aria-selected={mobilePhase === i}
                     onClick={() => setMobilePhase(i)}
                   >
@@ -671,6 +672,10 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 {phases.map((phase, i) => (
                   <section
                     key={phase}
+                    role="tabpanel"
+                    id={"stage-panel-" + i}
+                    aria-labelledby={"stage-tab-" + i}
+                    hidden={mobilePhase !== i}
                     className={
                       "lane " + (mobilePhase === i ? "mobile-selected" : "")
                     }
@@ -700,8 +705,8 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                         {i === 0
                           ? "DEPOSIT WINDOW"
                           : i === 1
-                            ? "PUMP.FUN"
-                            : "PUMPSWAP"}
+                            ? "STONK.FUN"
+                            : "MIGRATED POOLS"}
                       </small>
                     </header>
                     <div
@@ -888,34 +893,25 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                       ) : (
                         <div className="lane-empty">
                           <span className="empty-icon">
-                            <Icon
-                              name={
-                                i === 0
-                                  ? "clock"
-                                  : i === 1
-                                    ? "activity"
-                                    : "arrow-up"
-                              }
-                              size={23}
-                            />
+                            <img src="/brand/openbell.svg" alt="" width="46" height="46" />
                           </span>
                           <h4>
                             {query || onlyWatch
                               ? "No matches here"
                               : i === 0
-                                ? "No open pools yet."
+                                ? "The next opening could be yours."
                                 : i === 1
-                                  ? "No coins on the curve yet."
-                                  : "No graduated coins yet."}
+                                  ? "Good things start with an opening."
+                                  : "The next chapter is still ahead."}
                           </h4>
                           <p>
                             {query || onlyWatch
                               ? "Try another filter or reset your search."
                               : i === 0
-                                ? "Create a timed window for your community’s pooled first buy."
+                                ? "Gather your community around a timed STONK pool. Your terms. One shared first buy."
                                 : i === 1
                                   ? "Completed first buys appear here."
-                                  : "Verified PumpSwap migrations appear here."}
+                                  : "Verified graduated markets appear here."}
                           </p>
                           {i === 0 && (
                             <button
@@ -945,7 +941,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               <div className="feed-source">
                 <span>
                   <i />
-                  Enigma launch accounts · Solana mainnet
+                  Openbell launch accounts · Solana mainnet
                 </span>
                 <span>
                   {feed?.checkedAt
@@ -958,16 +954,16 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
             </section>
             <section
               className="how-strip"
-              aria-label="How an Enigma launch works"
+              aria-label="How an Openbell launch works"
             >
               <div>
                 <span>01</span>
-                <h3>Set the terms.</h3>
+                <h3>Set the stage.</h3>
                 <p>Choose the window and cap. Lock them when you publish.</p>
               </div>
               <div>
                 <span>02</span>
-                <h3>Make one opening.</h3>
+                <h3>Pool with purpose.</h3>
                 <p>
                   After close, anyone can finalize the mint and pooled buy
                   together.
@@ -975,11 +971,11 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               </div>
               <div>
                 <span>03</span>
-                <h3>Take your allocation.</h3>
+                <h3>Ring in the launch.</h3>
                 <p>Claim your tokens and any unspent change.</p>
               </div>
               <a href="/docs">
-                Know the mechanics
+                Read the field guide
                 <Icon name="arrow-up" size={16} />
               </a>
             </section>
@@ -992,9 +988,9 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               Explore launches
             </button>
             <div className="create-heading">
-              <p className="eyebrow">ENIGMA / CREATE A LAUNCH</p>
+              <p className="eyebrow">YOUR NEXT CHAPTER / CREATE</p>
               <h1>
-                Launch on <span>Enigma.</span>
+                Give your idea <span>an opening.</span>
               </h1>
               <p>
                 Set a 1–60 minute window and a wallet cap. Participants fund one
@@ -1061,7 +1057,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                         <input
                           required
                           maxLength={10}
-                          placeholder="e.g. enigma"
+                          placeholder="e.g. BELL"
                           value={form.symbol}
                           onChange={(e) => change("symbol", e.target.value)}
                         />
@@ -1190,14 +1186,14 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               </form>
               <aside className="launch-preview">
                 <div className="preview-heading">
-                  <span>LAUNCH LENS</span>
+                  <span>OPENING DETAILS</span>
                   <Icon name="search" size={16} />
                 </div>
                 <div className="preview-coin">
                   {image ? (
                     <img src={image} alt="" />
                   ) : (
-                    <span>{form.symbol.slice(0, 2) || "E"}</span>
+                    <span>{form.symbol.slice(0, 2) || "OB"}</span>
                   )}
                   <div>
                     <b>{form.symbol || "Your ticker"}</b>
@@ -1248,10 +1244,10 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 <p>
                   One public pool. One atomic opening.
                   <br />
-                  No added Enigma trading fee. Unused creation budget returns to
+                  No added Openbell trading fee. Unused creation budget returns to
                   the creator.
                 </p>
-                <a href="/docs#fees">
+                <a href="/docs#costs">
                   Understand the costs <Icon name="arrow-up" size={12} />
                 </a>
               </aside>
@@ -1355,7 +1351,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                   <div className="large-empty compact">
                     <Icon name="vault" size={25} />
                     <h3>No unclaimed positions.</h3>
-                    <p>Your next opening is on the launchboard.</p>
+                    <p>Find your next opening in the launch directory.</p>
                     <button
                       className="text-button"
                       onClick={() => navigate("board")}
@@ -1462,15 +1458,12 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
         )}
       </main>
       <footer>
-        <a className="brand" href="/">
-          <img src="/brand/enigma.svg" width="21" height="21" alt="" />
-          enigma
-        </a>
-        <span>A public window. A shared opening.</span>
+        <Brand />
+        <span>Good things start together.</span>
         <div>
-          <a href="/docs">Docs</a>
+          <a href="/docs">Field guide</a>
           <a href="/docs#custody">Custody & rules</a>
-          <span>Enigma launchpad · Solana</span>
+          <span>Built for Stonk.fun · On Solana</span>
         </div>
       </footer>
       {message && (
@@ -1492,7 +1485,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
             onClick={(e) => e.stopPropagation()}
           >
             <header>
-              <span className="eyebrow">LAUNCH LENS</span>
+              <span className="eyebrow">OPENING DETAILS</span>
               <button
                 className="icon-button"
                 aria-label="Close launch details"
@@ -1586,7 +1579,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                         </dd>
                       </div>
                       <div>
-                        <dt>Enigma protocol fee</dt>
+                        <dt>Openbell protocol fee</dt>
                         <dd>0% · Stonk.fun fees apply</dd>
                       </div>
                     </dl>
@@ -1716,7 +1709,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 <Icon name="chevron" size={13} />
               </summary>
               <p>
-                Trading pair: {activeLens.symbol} / STONK. Custody: Enigma 2
+                Trading pair: {activeLens.symbol} / STONK. Custody: the Openbell v2
                 program escrow. Wallet caps apply per address; they do not
                 verify unique people.
               </p>
@@ -1822,7 +1815,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               ))}
               {review.prepared.simulatedBook && (
                 <div>
-                  <dt>Enigma protocol fee</dt>
+                  <dt>Openbell protocol fee</dt>
                   <dd>0% · Stonk.fun fees apply</dd>
                 </div>
               )}
@@ -1871,7 +1864,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               <code>{review.plan.program}</code>
               <code>{review.plan.offering}</code>
               <p>
-                Program-controlled escrow. Enigma adds no separate trading fee.
+                Program-controlled escrow. Openbell adds no separate trading fee.
               </p>
             </details>
             <button

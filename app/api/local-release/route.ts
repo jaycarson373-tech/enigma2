@@ -68,7 +68,7 @@ export async function GET(req: Request) {
     return Response.json(
       {
         error:
-          "Enigma 2 release inputs could not be verified. No payment was requested.",
+          "Openbell v2 release inputs could not be verified. No payment was requested.",
       },
       { status: 503 },
     );
@@ -121,7 +121,7 @@ export async function POST(req: Request) {
     return Response.json(
       {
         error:
-          "The exact Enigma 2 deployment stage could not be verified. Recover the saved transaction before requesting another payment.",
+          "The exact Openbell v2 deployment stage could not be verified. Recover the saved transaction before requesting another payment.",
       },
       { status: 400 },
     );

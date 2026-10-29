@@ -1,4 +1,9 @@
-# Enigma 2 — Stonk.fun only
+# Openbell — Stonk.fun only
+
+Product renamed from Enigma 2 to Openbell at the owner’s request on October 29,
+2026. The complete website has a new original visual identity and directory
+layout. Keep the existing enigma2 repository and reviewed v2 program identifiers,
+financial behavior, transaction recovery keys and release status stable.
 
 Standalone repository: jaycarson373-tech/enigma2, main branch, fresh Git history.
 The original Enigma 1 checkpoint is preserved in jaycarson373-tech/enigma-launch,

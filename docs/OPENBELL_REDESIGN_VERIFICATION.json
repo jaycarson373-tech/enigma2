@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-29",
+  "product": "Openbell",
+  "repository": "jaycarson373-tech/enigma2",
+  "scope": "Complete website rebrand and redesign; same v2 financial program",
+  "applicationTests": { "passed": 31, "failed": 0 },
+  "productionBuild": "passed",
+  "typescript": "passed as part of production build",
+  "browser": {
+    "engine": "Chromium via Playwright",
+    "widthsChecked": [320, 390, 768, 1024, 1440],
+    "horizontalOverflow": false,
+    "uncaughtErrors": [],
+    "verified": ["home", "creation", "live form summary", "custom 17-minute window", "15-minute quick preset", "stage tabs", "keyboard tabs", "search", "watchlist", "pool details", "escape to close", "wallet menu", "portfolio", "field guide", "release ledger"],
+    "populatedData": "Explicitly labeled development-only synthetic fixture, unavailable in production"
+  },
+  "localProductionHttp": {
+    "success200": ["/", "/docs", "/operations", "/api/readiness", "/api/feed"],
+    "unavailable404": ["/lab/deploy", "/lab/visual", "/api/local-release"],
+    "rejected400": ["POST /api/prepare", "POST /api/quote", "POST /api/rpc sendTransaction"]
+  },
+  "programCodeHash": "c57c1938c3027c87ca18f1d230399ea500a48417f2d251a1f1ae112e7985ef4e",
+  "programBytesChanged": false,
+  "protocolIdentitiesOrRecoveryKeysChanged": false,
+  "releaseStatus": "built-not-deployed",
+  "publicWritesEnabled": false,
+  "mainnetTransactionsSent": false,
+  "hosting": {
+    "destination": "Existing Vercel account",
+    "currentPublicRedesignDeployment": false,
+    "previousTemporaryPreview": "expired; confirmed HTTP 404",
+    "blocker": "Vercel CLI logged out; expired temporary deployment cannot be updated"
+  }
+}

@@ -1,22 +1,22 @@
+import Brand from "@/components/brand";
 import XLink from "@/components/x-link";
 import { xProfileUrl } from "@/lib/site-links.mjs";
+export const metadata = { title: "Field guide — Openbell" };
+
 export default function Docs() {
   return (
     <>
       <header className="site-header">
-        <a className="brand" href="/">
-          <img src="/brand/enigma.svg" width="29" height="29" alt="" />
-          enigma
-        </a>
+        <Brand />
         <nav>
-          <a href="/">Explore</a>
-          <a href="/operations">Operations</a>
+          <a href="/">Discover</a>
+          <a href="/operations">Release status</a>
         </nav>
         <div className="header-actions">
-          <XLink url={xProfileUrl(process.env.ENIGMA_X_URL)} />
+          <XLink url={xProfileUrl(process.env.OPENBELL_X_URL || process.env.ENIGMA_X_URL)} />
         </div>
       </header>
-      <div className="docs-layout">
+      <main className="docs-layout" id="main">
         <aside className="docs-nav">
           <a href="#opening">Timed openings</a>
           <a href="#allocation">Allocation</a>
@@ -24,14 +24,14 @@ export default function Docs() {
           <a href="#custody">Custody</a>
         </aside>
         <article className="docs-body">
-          <p className="eyebrow">ENIGMA 2</p>
-          <h1>A timed opening on Stonk.fun.</h1>
+          <p className="eyebrow">THE OPENBELL FIELD GUIDE</p>
+          <h1>A little time. A shared beginning.</h1>
           <p className="lead">
             Pool STONK during a public window, then create the coin and make the
             pooled first buy in one transaction.
           </p>
           <section id="opening">
-            <h2>Open a window</h2>
+            <h2>01 / Set the opening</h2>
             <p>
               The creator supplies the name, ticker, hosted image and metadata,
               a whole-minute window from 1 to 60 minutes, and a per-wallet token
@@ -52,8 +52,9 @@ export default function Docs() {
               themselves buy the new token.
             </p>
           </section>
+          <span id="costs" />
           <section id="allocation">
-            <h2>Locked caps and curve weights</h2>
+            <h2>02 / Know your allocation</h2>
             <p>
               Deposits receive the next stretch of the locked initial Stonk
               curve. Later deposits can receive less token weight per STONK as
@@ -66,12 +67,12 @@ export default function Docs() {
               standard LaunchLab platform without a transfer-fee extension, then
               buys with pooled STONK atomically. The transaction verifies the
               actual token receipt, a minimum fill and the locked upper
-              allocation bound. Enigma adds no protocol fee. Stonk’s venue fees
+              allocation bound. Openbell adds no protocol fee. Stonk’s venue fees
               reduce the purchased tokens.
             </p>
           </section>
           <section id="claim">
-            <h2>Receive the actual purchased tokens</h2>
+            <h2>03 / Claim your share</h2>
             <p>
               After finalization, each position receives its share of the actual
               tokens purchased and any unused STONK, using its locked weight.
@@ -110,7 +111,7 @@ export default function Docs() {
             </p>
           </section>
         </article>
-      </div>
+      </main>
     </>
   );
 }

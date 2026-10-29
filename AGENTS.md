@@ -1,5 +1,7 @@
-# Enigma 2
-This standalone repository is Enigma 2: Stonk.fun-only technology. The working
+# Openbell (Enigma 2 repository)
+Openbell is the owner-selected new public identity as of October 29, 2026.
+Keep compatibility identifiers, original checkpoints and transaction recovery intact.
+This standalone repository is the former Enigma 2: Stonk.fun-only technology. The working
 branch is main. Read docs/ENIGMA_2.md first.
 The original jaycarson373-tech/enigma-launch repository's enigma-1 branch
 preserves the prior Pump.fun implementation at

@@ -1,24 +1,24 @@
+import Brand from "@/components/brand";
 import { enigma2Release as release } from "@/lib/enigma2-release.mjs";
 import XLink from "@/components/x-link";
 import { xProfileUrl } from "@/lib/site-links.mjs";
+
+export const metadata = { title: "Release ledger — Openbell" };
 
 export default function Operations() {
   return (
     <>
       <header className="site-header">
-        <a className="brand" href="/">
-          <img src="/brand/enigma.svg" width="29" height="29" alt="" />
-          enigma
-        </a>
+        <Brand />
         <nav>
-          <a href="/">Explore</a>
-          <a href="/docs">Product docs</a>
+          <a href="/">Discover</a>
+          <a href="/docs">Field guide</a>
         </nav>
         <div className="header-actions">
-          <XLink url={xProfileUrl(process.env.ENIGMA_X_URL)} />
+          <XLink url={xProfileUrl(process.env.OPENBELL_X_URL || process.env.ENIGMA_X_URL)} />
         </div>
       </header>
-      <div className="docs-layout">
+      <main className="docs-layout" id="main">
         <aside className="docs-nav">
           <a href="#availability">Release state</a>
           <a href="#venue">Stonk.fun</a>
@@ -26,8 +26,8 @@ export default function Operations() {
           <a href="#funding">Funding review</a>
         </aside>
         <article className="docs-body">
-          <p className="eyebrow">TECHNICAL REFERENCE</p>
-          <h1>Enigma 2 operations</h1>
+          <p className="eyebrow">OPENBELL / RELEASE LEDGER</p>
+          <h1>Behind the bell.</h1>
           <p className="lead">
             STONK pools for Stonk.fun launches. The independent contract is
             built and locally tested.
@@ -39,16 +39,18 @@ export default function Operations() {
               {release.codeBytes} bytes.
             </p>
             <p>
-              The Enigma 2 artifact and STONK client are implemented. Isolated
+              The Openbell v2 artifact and STONK client are implemented. Isolated
               tests run the actual pinned Stonk LaunchLab binary through
               deposit, atomic mint-and-buy, both beneficiary claims and replay
               rejection. Mainnet deployment and funded public acceptance remain
               pending; public wallet actions are disabled.
             </p>
             <p>
-              The Enigma 1 checkpoint preserves the previous Pump.fun
-              implementation. Its artifact, tests and deployment estimates do
-              not establish Enigma 2 readiness.
+              Openbell is the new product identity for this repository. The
+              underlying v2 program retains its reviewed Enigma 2 identifiers
+              and exact bytecode. The original Enigma 1 checkpoint remains
+              preserved separately; its tests and estimates do not establish
+              current readiness.
             </p>
           </section>
           <section id="venue">
@@ -83,7 +85,7 @@ export default function Operations() {
               they are not public transactions.
             </p>
             <p>
-              The distinct Enigma 2 artifact is pinned by its code hash.
+              The distinct v2 artifact is pinned by its code hash.
               Finalized deployed code, authority and configuration must next be
               verified, followed by a separately reviewed funded acceptance
               test. Launch transactions fit without a lookup table.
@@ -92,7 +94,7 @@ export default function Operations() {
           <section id="funding">
             <h2>Funding review</h2>
             <p>
-              The read-only Enigma 2 release planner quotes the compiled
+              The read-only v2 release planner quotes the compiled
               artifact against current mainnet rent. The wallet review shows the
               actual program recipient, retained deposits, temporary buffer and
               bounded network allowance before any signature.
@@ -110,7 +112,7 @@ export default function Operations() {
             </p>
           </section>
         </article>
-      </div>
+      </main>
     </>
   );
 }

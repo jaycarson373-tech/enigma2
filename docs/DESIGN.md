@@ -1,62 +1,44 @@
-# Design direction
+# Openbell — October 29, 2026
 
-Enigma is a compact, three-lane launch terminal, not a generic marketing page.
-Black/ice/cobalt, DM Sans, tabular figures, fine borders and an original cut-bar
-E monogram. The 1–60 minute window is controlled by seven presets and one bounded
-custom input. Launch Lens makes policy and actual transaction evidence inspectable.
+The owner requested a new name and a complete website redesign with its own
+identity. Openbell replaces Enigma in the public presentation, in the same
+`jaycarson373-tech/enigma2` repository. “Good things start together” connects the
+name to a shared opening and pooled first buy.
 
-References visually inspected during this build:
-- https://www.sequence.markets/ and /docs: discovery density and lifecycle clarity.
-- https://21st.dev/@manuarora700/components/sidebar: compact active-navigation rhythm.
-- https://reactbits.dev/: restrained interaction and reduced-motion considerations.
-- https://dribbble.com/shots/27359455-Crypto-Launchpad-Token-Discovery-Dashboard-UI:
-  discovery-card information hierarchy.
+## Visual direction
 
-No third-party visual component source was copied. Original SVG graphics/icons;
-no decorative emoji. Sequence public account layouts/instructions are independently
-implemented, with user-authorized protocol attribution. The archival program
-fixture is read-only public-chain test data, not a claim of source ownership.
-DM Sans is distributed under the SIL Open Font License via Google Fonts.
+Warm ivory paper, deep botanical green ink, pale citron and restrained clay
+accents. Self-hosted Manrope gives the interface a clear geometric voice; a
+serif italic accents the opening headline. The bell monogram, community bell
+illustration, icon and social card are original SVG artwork made for this site.
+Manrope is included under its SIL Open Font License in `public/fonts`.
 
+The old dense three-column terminal and cipher dial are removed. The homepage
+opens with a product explanation and custom illustration, followed by verified
+activity and one spacious launch directory. Stage tabs select one set of rows
+on desktop and mobile. Search, watchlist, refresh, sorting, pool details and
+wallet review retain their actual behaviors. Tabs support arrow keys, Home/End
+and proper panel relationships.
 
-## Launchpad refinement — October 23, 2026
+Create is a numbered paper form with a sticky summary on desktop and a stacked
+summary on phones. A minute ruler replaces the dial and updates the same live
+form state. Portfolio, Field Guide, Release Ledger, wallet menus, transaction
+reviews, recovery notices, empty states and metadata use the same design system.
+Fonts are served locally; no runtime third-party font request is needed.
 
-Position Enigma clearly as a launchpad: “Launch on Enigma.” A concise product
-explanation leads into discovery, with real activity totals below the listings.
-The black/ice/cobalt identity stays intact. Hierarchy, contrast, button sizing,
-empty states and creation navigation are refined rather than replacing the app.
+## Verification and continuity
 
-An original SVG cipher dial shows the creator's actual chosen window. Its three
-presets update the shared creation-form state; it is neither market data nor a
-simulated launch. The dial rotates only when the user changes settings, with a
-reduced-motion fallback. No shaders, animation dependency or perpetual render
-loop was added. Creation has direct anchors for details and launch terms, and
-browser back/forward reflects Explore/Create/Portfolio navigation.
+Desktop 1440px and mobile 390px screenshots cover home, creation and populated
+local visual fixtures. Browser checks cover stage selection, search, 17-minute
+custom settings, 15-minute quick settings and mobile width. Extra checks cover
+320px/768px/1024px layouts, wallet menus, portfolio, keyboard tabs and detail
+modals. Local fixture numbers are labeled and never enter public activity.
+No new animation dependency; reduced-motion preferences are respected.
 
-References visually revisited:
-- https://21st.dev/: typographic hierarchy and clear primary/secondary actions.
-- https://reactbits.dev/text-animations/decrypted-text: interaction-led resolution
-  as a codebreaking reference. No random-glyph text replaces financial labels.
+This redesign does not rename the repo, alter Rust source/bytecode, PDA seeds,
+account identities, wallet recovery namespaces or activation requirements. The
+compiled release remains built-not-deployed, and public financial actions remain
+paused pending deployment and funded acceptance. Original Enigma 1 is preserved.
 
-All new visual code is original; no third-party component source was copied or
-installed. Original SVG illustration and existing coherent SVG icons; no emoji.
-The financial program, locked terms, receipts, activation manifest, write pause
-and wallet/program-scoped transaction recovery are unchanged.
-
-## Enigma Scope — terminal-first revision
-
-The user's new monitor photograph supersedes the large homepage hero. Actual
-Sequence home was visually revisited: compact totals, small scope heading,
-three independently scrolling stages and dense identity/market/action rows.
-Enigma now follows that useful hierarchy with its original ice/cobalt identity,
-global search, watchlist, per-stage mobile tabs and a compact mechanics disclosure.
-The interactive launch dial lives in Create, inside Quick window settings.
-
-This uses original HTML/CSS/SVG, not copied component source or branding. The
-21st.dev and React Bits references above still inform spacing and purposeful,
-finite interactions; a trading board does not need a background shader or
-randomized text around financial data. Bot-elimination claims are not made.
-
-`/lab/visual` is a development-only, explicitly labeled synthetic fixture for
-populated card QA. It is 404 in production and never enters feed(), public APIs,
-treasury records or receipts. Normal production empty states remain honest.
+Clean production screenshots: [Desktop](screenshots/openbell-desktop.png),
+[Mobile](screenshots/openbell-mobile.png), [Create](screenshots/openbell-create.png).

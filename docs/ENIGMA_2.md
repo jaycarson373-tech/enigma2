@@ -24,7 +24,8 @@ Repository:
 Development branch: `main`, with fresh history independent of Enigma 1.
 Sole execution venue: **Stonk.fun** using its official **Raydium LaunchLab**
 integration. No Pump.fun launch/trade execution, venue selector or Pump fallback.
-Keep Enigma's identity and timed-pool product direction. Do not silently replace
+The October 29 owner-requested Openbell rebrand supersedes the original Enigma
+identity direction. Keep the timed-pool product direction. Do not silently replace
 pooled allocation with a direct creator-only launch.
 
 Use the venue's current pricing and verified onchain platform/config/curve rules.

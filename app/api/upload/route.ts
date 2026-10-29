@@ -23,7 +23,7 @@ export async function POST(req:Request){
     const bytes=await sharp(source,{limitInputPixels:20000000}).rotate().resize(800,800,{fit:'inside',withoutEnlargement:true}).webp({quality:90}).toBuffer();
     const hash=createHash('sha256').update(bytes).digest('hex');
     const image=await store('coins/'+hash+'.webp',bytes,'image/webp');
-    const metadata:Record<string,string|boolean>={name,symbol,description:String(form.get('description')||'').slice(0,1000),image:image.url,showName:true,createdOn:'https://enigma-launch.vercel.app'};
+    const metadata:Record<string,string|boolean>={name,symbol,description:String(form.get('description')||'').slice(0,1000),image:image.url,showName:true,createdOn:process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : new URL(req.url).origin)};
     for(const k of ['twitter','website']){const v=String(form.get(k)||'');if(v){const u=new URL(v);if(u.protocol!=='https:'||u.username||u.password)throw Error('Use HTTPS social links.');metadata[k]=u.toString();}}
     const json=Buffer.from(JSON.stringify(metadata)),id=createHash('sha256').update(json).digest('hex');
     const saved=await store('metadata/'+id+'.json',json,'application/json');

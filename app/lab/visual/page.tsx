@@ -31,7 +31,7 @@ export default function VisualQA() {
     symbol,
     name,
     uri: "https://example.com/local-fixture-only",
-    image: i % 3 === 0 ? "/brand/enigma.svg" : null,
+    image: i % 3 === 0 ? "/brand/openbell.svg" : null,
     status: i < 3 ? "open" : "launched",
     poolVerified: i >= 6,
     quoteMint: "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx",

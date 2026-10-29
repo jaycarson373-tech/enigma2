@@ -281,7 +281,7 @@ export default function ReleaseConsole() {
             save,
           });
           setMessage(
-            "Openbell v2 deployment, code hash, authority and initialization verified. Public launches remain paused for the separately capped acceptance test.",
+            "IPO v2 deployment, code hash, authority and initialization verified. Public launches remain paused for the separately capped acceptance test.",
           );
           setPlan({ ...plan, result });
           break;

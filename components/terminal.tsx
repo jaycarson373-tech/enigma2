@@ -523,7 +523,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
           <>
             <section className="opening-hero" aria-labelledby="opening-title">
               <div className="hero-copy">
-                <p className="eyebrow"><span className="hero-kicker-mark" /> A SHARED START ON STONK.FUN</p>
+                <p className="eyebrow"><span className="hero-kicker-mark" /> IPO / INITIAL PUMP OFFERING</p>
                 <h1 id="opening-title">Big ideas.<br />One <em>opening.</em></h1>
                 <p className="hero-description">Bring your people. Pool your STONK.<br className="desktop-break" /> Make the first buy together.</p>
                 <div className="hero-actions">
@@ -533,9 +533,9 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 <div className="hero-footnote"><span>01—60 min windows</span><i /><span>Wallet caps, locked upfront</span></div>
               </div>
               <div className="hero-art" aria-hidden="true">
-                <div className="art-topline"><span>THE OPENBELL METHOD</span><span>№ 001</span></div>
+                <div className="art-topline"><span>INITIAL PUMP OFFERING</span><span>№ 001</span></div>
                 <img src="/brand/opening.svg" alt="" width="500" height="320" />
-                <div className="art-caption"><span>Many wallets.<br /><b>One first buy.</b></span><span className="art-stamp">OB<br /><small>EST. 2026</small></span></div>
+                <div className="art-caption"><span>Many wallets.<br /><b>One first buy.</b></span><span className="art-stamp">IPO<br /><small>EST. 2026</small></span></div>
               </div>
             </section>
             <section className="activity-ribbon" aria-label="Verified protocol activity">
@@ -548,7 +548,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
             <section
               className="discovery"
               id="launches"
-              aria-label="Explore Openbell launches"
+              aria-label="Explore IPO launches"
             >
               <div className="board-toolbar">
                 <div className="scope-title">
@@ -893,7 +893,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                       ) : (
                         <div className="lane-empty">
                           <span className="empty-icon">
-                            <img src="/brand/openbell.svg" alt="" width="46" height="46" />
+                            <img src="/brand/ipo.svg" alt="" width="46" height="46" />
                           </span>
                           <h4>
                             {query || onlyWatch
@@ -941,7 +941,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               <div className="feed-source">
                 <span>
                   <i />
-                  Openbell launch accounts · Solana mainnet
+                  IPO launch accounts · Solana mainnet
                 </span>
                 <span>
                   {feed?.checkedAt
@@ -954,7 +954,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
             </section>
             <section
               className="how-strip"
-              aria-label="How an Openbell launch works"
+              aria-label="How an IPO launch works"
             >
               <div>
                 <span>01</span>
@@ -971,7 +971,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               </div>
               <div>
                 <span>03</span>
-                <h3>Ring in the launch.</h3>
+                <h3>Make the first move.</h3>
                 <p>Claim your tokens and any unspent change.</p>
               </div>
               <a href="/docs">
@@ -1193,7 +1193,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                   {image ? (
                     <img src={image} alt="" />
                   ) : (
-                    <span>{form.symbol.slice(0, 2) || "OB"}</span>
+                    <span>{form.symbol.slice(0, 2) || "IPO"}</span>
                   )}
                   <div>
                     <b>{form.symbol || "Your ticker"}</b>
@@ -1244,7 +1244,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 <p>
                   One public pool. One atomic opening.
                   <br />
-                  No added Openbell trading fee. Unused creation budget returns to
+                  No added IPO trading fee. Unused creation budget returns to
                   the creator.
                 </p>
                 <a href="/docs#costs">
@@ -1579,7 +1579,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                         </dd>
                       </div>
                       <div>
-                        <dt>Openbell protocol fee</dt>
+                        <dt>IPO protocol fee</dt>
                         <dd>0% · Stonk.fun fees apply</dd>
                       </div>
                     </dl>
@@ -1709,7 +1709,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
                 <Icon name="chevron" size={13} />
               </summary>
               <p>
-                Trading pair: {activeLens.symbol} / STONK. Custody: the Openbell v2
+                Trading pair: {activeLens.symbol} / STONK. Custody: the IPO v2
                 program escrow. Wallet caps apply per address; they do not
                 verify unique people.
               </p>
@@ -1815,7 +1815,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               ))}
               {review.prepared.simulatedBook && (
                 <div>
-                  <dt>Openbell protocol fee</dt>
+                  <dt>IPO protocol fee</dt>
                   <dd>0% · Stonk.fun fees apply</dd>
                 </div>
               )}
@@ -1864,7 +1864,7 @@ export default function Terminal({ visualFeed, xUrl }: { visualFeed?: any; xUrl?
               <code>{review.plan.program}</code>
               <code>{review.plan.offering}</code>
               <p>
-                Program-controlled escrow. Openbell adds no separate trading fee.
+                Program-controlled escrow. IPO adds no separate trading fee.
               </p>
             </details>
             <button

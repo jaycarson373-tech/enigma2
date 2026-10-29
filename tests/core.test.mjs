@@ -251,7 +251,7 @@ test("independent deployment remains disabled before public activation and artif
   const live = await feed();
   assert.deepEqual(live.offers, []);
   assert.equal(live.stats.launches, 0);
-  assert.match(live.source, /Openbell/);
+  assert.match(live.source, /IPO/);
 });
 
 test("SPL layouts resolve the bounded pure-JS converter, not the vulnerable native copy", async () => {

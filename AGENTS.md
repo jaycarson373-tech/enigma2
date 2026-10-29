@@ -1,5 +1,6 @@
-# Openbell (Enigma 2 repository)
-Openbell is the owner-selected new public identity as of October 29, 2026.
+# IPO (Enigma 2 repository)
+IPO — Initial Pump Offering — is the owner-selected public identity as of
+October 29, 2026. This supersedes the Openbell proposal. Keep Stonk.fun-only execution.
 Keep compatibility identifiers, original checkpoints and transaction recovery intact.
 This standalone repository is the former Enigma 2: Stonk.fun-only technology. The working
 branch is main. Read docs/ENIGMA_2.md first.

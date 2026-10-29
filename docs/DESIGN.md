@@ -1,15 +1,17 @@
-# Openbell — October 29, 2026
+# IPO — Initial Pump Offering
 
 The owner requested a new name and a complete website redesign with its own
-identity. Openbell replaces Enigma in the public presentation, in the same
-`jaycarson373-tech/enigma2` repository. “Good things start together” connects the
-name to a shared opening and pooled first buy.
+identity. The owner then chose IPO — Initial Pump Offering — as the final
+name, replacing the proposed Openbell name. IPO replaces Enigma in the public
+presentation, in the same `jaycarson373-tech/enigma2` repository. “Good things start together” connects the
+product to a shared opening and pooled first buy. The name does not change
+the Stonk.fun-only venue or STONK pool asset.
 
 ## Visual direction
 
 Warm ivory paper, deep botanical green ink, pale citron and restrained clay
 accents. Self-hosted Manrope gives the interface a clear geometric voice; a
-serif italic accents the opening headline. The bell monogram, community bell
+serif italic accents the opening headline. The ascending-bar monogram, pooled-offering
 illustration, icon and social card are original SVG artwork made for this site.
 Manrope is included under its SIL Open Font License in `public/fonts`.
 
@@ -40,5 +42,5 @@ account identities, wallet recovery namespaces or activation requirements. The
 compiled release remains built-not-deployed, and public financial actions remain
 paused pending deployment and funded acceptance. Original Enigma 1 is preserved.
 
-Clean production screenshots: [Desktop](screenshots/openbell-desktop.png),
-[Mobile](screenshots/openbell-mobile.png), [Create](screenshots/openbell-create.png).
+Clean production screenshots: [Desktop](screenshots/ipo-desktop.png),
+[Mobile](screenshots/ipo-mobile.png), [Create](screenshots/ipo-create.png).

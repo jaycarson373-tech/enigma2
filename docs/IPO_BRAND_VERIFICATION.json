@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-29",
+  "product": "IPO",
+  "expansion": "Initial Pump Offering",
+  "repository": "jaycarson373-tech/enigma2",
+  "scope": "Owner-selected name, wordmark, icon, offering illustration, social card, visible copy, metadata and current documentation",
+  "applicationTests": { "passed": 31, "failed": 0 },
+  "productionBuild": "passed",
+  "typescript": "passed as part of production build",
+  "browser": {
+    "engine": "Chromium via Playwright",
+    "widthsChecked": [320, 390, 768, 1440],
+    "pagesCheckedAtEachWidth": ["/", "/?create", "/?view=portfolio", "/docs", "/operations"],
+    "horizontalOverflow": false,
+    "uncaughtErrors": [],
+    "correctNameAndExpansionVisible": true,
+    "supersededBrandAbsentFromVisibleText": true,
+    "brandAssetsAvailable": true,
+    "createActionStillDisabled": true
+  },
+  "programCodeHash": "c57c1938c3027c87ca18f1d230399ea500a48417f2d251a1f1ae112e7985ef4e",
+  "programBytesChanged": false,
+  "quoteAsset": "STONK",
+  "executionVenue": "Stonk.fun",
+  "releaseStatus": "built-not-deployed",
+  "publicWritesEnabled": false,
+  "mainnetTransactionsSent": false,
+  "hosting": {
+    "currentPublicBrandDeployment": false,
+    "blocker": "Vercel CLI remains logged out; previous temporary preview expired"
+  },
+  "screenshots": ["screenshots/ipo-desktop.png", "screenshots/ipo-mobile.png", "screenshots/ipo-create.png"]
+}

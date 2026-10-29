@@ -3,7 +3,7 @@ import { enigma2Release as release } from "@/lib/enigma2-release.mjs";
 import XLink from "@/components/x-link";
 import { xProfileUrl } from "@/lib/site-links.mjs";
 
-export const metadata = { title: "Release ledger — Openbell" };
+export const metadata = { title: "Release ledger — IPO" };
 
 export default function Operations() {
   return (
@@ -15,7 +15,7 @@ export default function Operations() {
           <a href="/docs">Field guide</a>
         </nav>
         <div className="header-actions">
-          <XLink url={xProfileUrl(process.env.OPENBELL_X_URL || process.env.ENIGMA_X_URL)} />
+          <XLink url={xProfileUrl(process.env.IPO_X_URL || process.env.OPENBELL_X_URL || process.env.ENIGMA_X_URL)} />
         </div>
       </header>
       <main className="docs-layout" id="main">
@@ -26,8 +26,8 @@ export default function Operations() {
           <a href="#funding">Funding review</a>
         </aside>
         <article className="docs-body">
-          <p className="eyebrow">OPENBELL / RELEASE LEDGER</p>
-          <h1>Behind the bell.</h1>
+          <p className="eyebrow">IPO / RELEASE LEDGER</p>
+          <h1>Inside the offering.</h1>
           <p className="lead">
             STONK pools for Stonk.fun launches. The independent contract is
             built and locally tested.
@@ -39,14 +39,14 @@ export default function Operations() {
               {release.codeBytes} bytes.
             </p>
             <p>
-              The Openbell v2 artifact and STONK client are implemented. Isolated
+              The IPO v2 artifact and STONK client are implemented. Isolated
               tests run the actual pinned Stonk LaunchLab binary through
               deposit, atomic mint-and-buy, both beneficiary claims and replay
               rejection. Mainnet deployment and funded public acceptance remain
               pending; public wallet actions are disabled.
             </p>
             <p>
-              Openbell is the new product identity for this repository. The
+              IPO is the new product identity for this repository. The
               underlying v2 program retains its reviewed Enigma 2 identifiers
               and exact bytecode. The original Enigma 1 checkpoint remains
               preserved separately; its tests and estimates do not establish

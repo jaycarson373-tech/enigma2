@@ -1,7 +1,7 @@
 import Brand from "@/components/brand";
 import XLink from "@/components/x-link";
 import { xProfileUrl } from "@/lib/site-links.mjs";
-export const metadata = { title: "Field guide — Openbell" };
+export const metadata = { title: "Field guide — IPO" };
 
 export default function Docs() {
   return (
@@ -13,7 +13,7 @@ export default function Docs() {
           <a href="/operations">Release status</a>
         </nav>
         <div className="header-actions">
-          <XLink url={xProfileUrl(process.env.OPENBELL_X_URL || process.env.ENIGMA_X_URL)} />
+          <XLink url={xProfileUrl(process.env.IPO_X_URL || process.env.OPENBELL_X_URL || process.env.ENIGMA_X_URL)} />
         </div>
       </header>
       <main className="docs-layout" id="main">
@@ -24,7 +24,7 @@ export default function Docs() {
           <a href="#custody">Custody</a>
         </aside>
         <article className="docs-body">
-          <p className="eyebrow">THE OPENBELL FIELD GUIDE</p>
+          <p className="eyebrow">THE IPO FIELD GUIDE</p>
           <h1>A little time. A shared beginning.</h1>
           <p className="lead">
             Pool STONK during a public window, then create the coin and make the
@@ -67,7 +67,7 @@ export default function Docs() {
               standard LaunchLab platform without a transfer-fee extension, then
               buys with pooled STONK atomically. The transaction verifies the
               actual token receipt, a minimum fill and the locked upper
-              allocation bound. Openbell adds no protocol fee. Stonk’s venue fees
+              allocation bound. IPO adds no protocol fee. Stonk’s venue fees
               reduce the purchased tokens.
             </p>
           </section>

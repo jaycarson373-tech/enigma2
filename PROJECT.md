@@ -1,8 +1,10 @@
-# Openbell — Stonk.fun only
+# IPO — Initial Pump Offering
 
-Product renamed from Enigma 2 to Openbell at the owner’s request on October 29,
-2026. The complete website has a new original visual identity and directory
-layout. Keep the existing enigma2 repository and reviewed v2 program identifiers,
+The owner selected IPO, expanded exactly as “Initial Pump Offering,” on
+October 29, 2026. This supersedes the proposed Openbell name. The name does
+not change the selected STONK pool asset or Stonk.fun execution venue. The
+website retains the new visual identity and directory layout. Keep the existing
+enigma2 repository and reviewed v2 program identifiers,
 financial behavior, transaction recovery keys and release status stable.
 
 Standalone repository: jaycarson373-tech/enigma2, main branch, fresh Git history.

@@ -1,6 +1,6 @@
-# IPO — Initial Pump Offering
+# Block
 
-**Initial Pump Offering.** Good things start together. Community STONK pools
+Good things start together. Community STONK pools
 for timed openings on **Stonk.fun**. Formerly Enigma 2; this is the existing separate
 [jaycarson373-tech/enigma2](https://github.com/jaycarson373-tech/enigma2) repository.
 
@@ -22,11 +22,11 @@ The retained Enigma 1 source, fixtures and tests are historical references only.
 The original [Enigma 1 checkpoint](https://github.com/jaycarson373-tech/enigma-launch/tree/enigma-1)
 remains preserved in its original repository.
 
-IPO is the public product name. The repository, reviewed v2 artifact,
+Block is the public product name. The repository, reviewed v2 artifact,
 account discriminators, deployment seeds, recovery storage keys and activation
 flags retain their existing identifiers for compatibility. See
-[the current design](docs/DESIGN.md). Screenshots: [desktop](docs/screenshots/ipo-desktop.png),
-[mobile](docs/screenshots/ipo-mobile.png), [creation](docs/screenshots/ipo-create.png).
+[the current design](docs/DESIGN.md). Screenshots: [desktop](docs/screenshots/block-desktop.png),
+[mobile](docs/screenshots/block-mobile.png), [creation](docs/screenshots/block-create.png).
 
 ## Run and verify
 

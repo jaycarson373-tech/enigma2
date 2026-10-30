@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-30",
+  "product": "Block",
+  "repository": "jaycarson373-tech/enigma2",
+  "scope": "Owner-selected product name, cube logo, offering illustration, share images, visible copy, metadata and current docs",
+  "applicationTests": { "passed": 31, "failed": 0 },
+  "productionBuild": "passed",
+  "typescript": "passed as part of production build",
+  "browser": {
+    "engine": "Chromium via Playwright",
+    "widthsChecked": [320, 390, 1440],
+    "pagesCheckedAtEachWidth": ["/", "/?create", "/?view=portfolio", "/docs", "/operations"],
+    "horizontalOverflow": false,
+    "uncaughtErrors": [],
+    "blockBrandVisible": true,
+    "supersededNamesAbsentFromVisibleText": true,
+    "brandAssetsAvailable": true,
+    "createActionStillDisabled": true
+  },
+  "programCodeHash": "c57c1938c3027c87ca18f1d230399ea500a48417f2d251a1f1ae112e7985ef4e",
+  "programBytesChanged": false,
+  "quoteAsset": "STONK",
+  "executionVenue": "Stonk.fun",
+  "releaseStatus": "built-not-deployed",
+  "publicWritesEnabled": false,
+  "mainnetTransactionsSent": false,
+  "websiteDeploymentPerformed": false,
+  "screenshots": ["screenshots/block-desktop.png", "screenshots/block-mobile.png", "screenshots/block-create.png"]
+}

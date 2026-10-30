@@ -1,11 +1,9 @@
-# IPO — Initial Pump Offering
+# Block — Stonk.fun only
 
-The owner selected IPO, expanded exactly as “Initial Pump Offering,” on
-October 29, 2026. This supersedes the proposed Openbell name. The name does
-not change the selected STONK pool asset or Stonk.fun execution venue. The
-website retains the new visual identity and directory layout. Keep the existing
-enigma2 repository and reviewed v2 program identifiers,
-financial behavior, transaction recovery keys and release status stable.
+The owner selected Block as the public product name on October 30, 2026.
+Keep the existing design, STONK pooling and Stonk.fun-only execution. The repo,
+reviewed program identities, financial behavior, recovery keys and release
+status remain stable.
 
 Standalone repository: jaycarson373-tech/enigma2, main branch, fresh Git history.
 The original Enigma 1 checkpoint is preserved in jaycarson373-tech/enigma-launch,

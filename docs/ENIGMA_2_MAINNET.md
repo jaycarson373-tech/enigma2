@@ -1,4 +1,4 @@
-# IPO release status — updated October 29, 2026
+# Block release status — updated October 30, 2026
 
 **Contract/client implemented and isolated execution passed. Mainnet deployment,
 funded public acceptance and customer activation remain pending.**
@@ -62,10 +62,10 @@ to distinct recorded beneficiaries before public writes can be enabled.
 The owner selected Vercel using the existing setup. The CLI is logged out of that
 account. The October 28 temporary preview at
 https://instant-zircon-erohi6z.tmp.now expired and returned 404 on October 29.
-The finished IPO redesign passes its production build and browser checks
+The finished Block redesign passes its production build and browser checks
 locally. Publishing into the existing account requires Vercel sign-in; the CLI
 rejects redeployment of the expired anonymous instance. No current public
-website deployment is claimed. See [redesign verification](IPO_BRAND_VERIFICATION.json).
+website deployment is claimed. See [redesign verification](BLOCK_BRAND_VERIFICATION.json).
 
 Verify SOLANA_RPC_URL and BLOB_READ_WRITE_TOKEN in Vercel's server environment;
 reuse existing account resources where appropriate. Neither wallet keys nor
